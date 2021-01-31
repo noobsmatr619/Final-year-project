@@ -100,7 +100,7 @@ router.post("/signup", async (req, res) => {
         return res.status(500).send("Server error");
     }
 });
-//reserSend
+
 router.post("/reset-password", (req, res) => {
     crypto.randomBytes(32, (err, buffer) => {
         if (err) {
