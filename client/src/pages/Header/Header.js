@@ -6,17 +6,18 @@ import HelpIcon from "@material-ui/icons/Help";
 import SearchIcon from "@material-ui/icons/Search";
 import CallToActionIcon from "@material-ui/icons/CallToAction";
 import { IconButton } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import { Link, useHistory } from "react-router-dom";
+import { LogoutUser } from "../../actions/authActions";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SettingsIcon from "@material-ui/icons/Settings";
-import SendIcon from "@material-ui/icons/Send";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import { useDispatch } from "react-redux";
 import HomeIcon from "@material-ui/icons/Home";
 import ChatIcon from "@material-ui/icons/Chat";
 import ShowChartIcon from "@material-ui/icons/ShowChart";
-import MessageIcon from "@material-ui/icons/Message";
 function Header() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   let [slidebarHandler, SlidebarState] = useState(false);
   let slideSidebar = () => SlidebarState(!slidebarHandler);
   return (
@@ -101,7 +102,7 @@ function Header() {
           </Link>
         </div>
         <div className='headerLeftOpt  '>
-          <Link to='/blog' className='iconStyle'>
+          <Link to='/health-safety' className='iconStyle'>
             {" "}
             <span className='each-span headerOptTLineOne'>
               <CallToActionIcon />
@@ -111,13 +112,13 @@ function Header() {
           </Link>
         </div>
         <div className='headerLeftOpt  '>
-          <Link to='/blog' className='iconStyle'>
+          <Link to='/add-form' className='iconStyle'>
             {" "}
             <span className='each-span headerOptTLineOne'>
               <HelpIcon />
             </span>
             <br />
-            <span className='each-span headerOptLineTwo'> help </span>{" "}
+            <span className='each-span headerOptLineTwo'> Forms </span>{" "}
           </Link>
         </div>
       </div>
@@ -133,12 +134,26 @@ function Header() {
 
       <div className='headerRightNav'>
         <span className='each-span headerBasketCount'></span>
-
-        <Link to='/login'>
-          <span className='each-span headerRightOption'>
-            <AccountCircleIcon />
+        {localStorage.getItem("CRM_TOKEN") ? (
+          <span
+            className='each-span headerRightOption'
+            style={{ cursor: "pointer" }}
+            onClick={e => {
+              e.preventDefault();
+              dispatch(LogoutUser());
+              history.push("/auth");
+            }}
+          >
+            Logout
           </span>
-        </Link>
+        ) : (
+          <Link to='/auth'>
+            <span className='each-span headerRightOption'>
+              <AccountCircleIcon />
+            </span>
+          </Link>
+        )}
+
         <span className='each-span headerRightOption'>
           <SettingsIcon />
         </span>

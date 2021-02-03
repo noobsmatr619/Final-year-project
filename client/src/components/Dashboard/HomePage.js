@@ -5,7 +5,7 @@ class HomePage extends Component {
     return (
       <>
         <Header />
-        <h3>Hamza Joshi</h3>
+        <h3>Home Page</h3>
       </>
     );
   }

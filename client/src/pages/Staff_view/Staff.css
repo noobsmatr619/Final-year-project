@@ -7,3 +7,7 @@
     display: flex;
     justify-content: center;
 }
+.fc .fc-list-table td,
+  .fc .fc-list-day-cushion{
+      padding: 3px 3px !important;
+  }

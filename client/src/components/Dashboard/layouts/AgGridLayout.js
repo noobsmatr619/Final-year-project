@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { AgGridReact } from "ag-grid-react";
 
-class Page1 extends Component {
+class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -62,4 +62,4 @@ class Page1 extends Component {
     );
   }
 }
-export default Page1;
+export default Admin;
