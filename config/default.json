@@ -1,4 +1,4 @@
 {
-  "MongoURL": "mongodb+srv://admin:Y4rMg81AD5b6QgER@cluster0.tpz9g.mongodb.net/dmc?retryWrites=true&w=majority",
+  "MongoURL": "mongodb+srv://admin:Plymouth.0410@dmc.7r25y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
   "jwtsecret": "smatr619"
 }
