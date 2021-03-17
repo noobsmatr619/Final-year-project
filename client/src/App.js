@@ -11,7 +11,10 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import store from './store';
 import { LoadUser } from './actions/authActions';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+//old code
+// import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+//new code
+import { Router, Route, Redirect } from 'react-router-dom';
 import setAuthToken from './utils/setAuthToken';
 //Loading
 import Loader from 'react-loader-spinner';
@@ -61,6 +64,19 @@ const AddMaterial = React.lazy(() =>
 const AddProduct = React.lazy(() => import('./pages/add-product/AddProduct'));
 const AddMachine = React.lazy(() => import('./pages/add-machine/AddMachine'));
 const AddForm = React.lazy(() => import('./pages/add-form/AddForm'));
+
+//Machines status
+const MachinesStatus = React.lazy(() =>
+  import('./pages/machines-status/MachinesStatus')
+);
+
+//Machines status
+const MachinesList = React.lazy(() =>
+  import('./pages/machines-target/MachinesList')
+);
+const MachineUpdate = React.lazy(() =>
+  import('./pages/machines-target/MachineUpdate')
+);
 
 if (localStorage.CRM_TOKEN) {
   setAuthToken(localStorage.CRM_TOKEN);
@@ -120,6 +136,7 @@ function App() {
             <Helmet>
               <title> {'DMC'}</title>
             </Helmet>
+
             {/* <Redirect exact from='/' to='/auth' /> */}
             {/* <PrivateRoute exact path='/user-management' component={Admin} /> */}
             <Route exact path="/user-management" component={Admin} />
@@ -133,15 +150,15 @@ function App() {
             {/* <Route exact path='/ChartEx2' component={ChartEx2} /> */}
             {/* <Route exact path='/ChartEx3' component={ChartEx3} /> */}
             <Route exact path="/auth" component={Auth} />
-            <Route exact path='/health-safety' component={HealthSafety} />
+            <Route exact path="/health-safety" component={HealthSafety} />
             {/* <Route exact path='/loading' component={Loading} /> */}
-            {/* <Route exact path='/reports' component={Reports} /> */}
-            {/* <Route exact path='/stock' component={Stock} /> */}
-            {/* <Route
+            <Route exact path='/reports' component={Reports} />
+            <Route exact path="/stock" component={Stock} />
+            <Route
               exact
-              path={["/chat", "/chat/:id/:displayName"]}
+              path={['/chat', '/chat/:id/:displayName']}
               component={Chat}
-            /> */}
+            />
             {/* <Route exact path='/login' component={Login} /> */}
             <Route exact path="/emp" component={Emp} />
             {/* <Route exact path='/target' component={Target} /> */}
@@ -155,6 +172,13 @@ function App() {
             {/* <Route exact path='/create-team' component={CreateTeam} /> */}
             {/* <Route exact path='/add-machine' component={AddMachine} /> */}
             <Route exact path="/add-form" component={AddForm} />
+            <Route exact path="/machines" component={MachinesStatus} />
+            <Route exact path="/machines/list" component={MachinesList} />
+            <Route
+              exact
+              path="/machines/update/:machineId"
+              component={MachineUpdate}
+            />
             {/* <Route path='*' component={() => <Redirect to='/auth' />} /> */}
           </div>
         </Router>

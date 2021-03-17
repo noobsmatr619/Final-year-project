@@ -1,12 +1,14 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   createProject,
   getAllProjects,
   assignProject,
-} = require("./../controllers/project");
-const { protect } = require("./../middleware/auth");
-router.post("/createProject", protect, createProject);
-router.post("/assignProject", protect, assignProject);
-router.get("/getAllProjects", protect, getAllProjects);
+  completedProject
+} = require('./../controllers/project');
+const { protect } = require('./../middleware/auth');
+router.post('/createProject', protect, createProject);
+router.post('/assignProject', protect, assignProject);
+router.get('/getAllProjects', protect, getAllProjects);
+router.get('/completedProject', protect, completedProject);
 module.exports = router;

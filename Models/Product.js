@@ -1,58 +1,57 @@
-let mongoose = require("mongoose");
+let mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     image: {
-      type: String,
-      required: true,
+      type: String
     },
     barcode: {
-      type: String,
+      type: String
     },
     rawMaterials: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "RawMaterial",
-      required: true,
+      ref: 'RawMaterial',
+      required: true
     },
     operatorNo: {
       type: Number,
-      required: true,
+      required: true
     },
     duration: {
       type: Date,
-      required: true,
+      required: true
     },
     category: {
       type: String,
-      required: true,
+      required: true
     },
     price: {
       type: Number,
-      required: true,
+      required: true
     },
     description: {
       type: String,
-      required: true,
+      required: true
     },
     machine: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Machine",
-      required: true,
+      ref: 'Machine',
+      required: true
     },
     createdAt: {
       type: Date,
-      default: Date.now,
-    },
+      default: Date.now
+    }
   },
   {
     toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model('Product', productSchema);
 //type,count,machine

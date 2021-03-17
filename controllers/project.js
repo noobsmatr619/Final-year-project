@@ -1,5 +1,5 @@
-const Project = require("../Models/Project");
-const { sendServerError } = require("./../utils/errors/serverError");
+const Project = require('../Models/Project');
+const { sendServerError } = require('./../utils/errors/serverError');
 
 exports.createProject = async (req, res, next) => {
   const { project, description, dueDate } = req.body;
@@ -8,27 +8,38 @@ exports.createProject = async (req, res, next) => {
     const projectCreated = await Project.create({
       project,
       description,
-      dueDate,
+      dueDate
     });
     res.status(200).json({
       data: projectCreated,
-      message: "Project Added Succsfull",
+      message: 'Project Added Succsfull'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 exports.getAllProjects = async (req, res, next) => {
   try {
     const project = await Project.find({}).sort({
-      createdAt: -1,
+      createdAt: -1
     });
     return res.status(200).json({
-      data: project,
+      data: project
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
+  }
+};
+exports.completedProject = async (req, res, next) => {
+  try {
+    const project = await Project.countDocuments({ isCompleted: true });
+    return res.status(200).json({
+      data: project
+    });
+  } catch (error) {
+    console.log(error);
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 exports.assignProject = async (req, res, next) => {
@@ -36,17 +47,17 @@ exports.assignProject = async (req, res, next) => {
   try {
     await Project.findOneAndUpdate(
       {
-        _id: id,
+        _id: id
       },
       {
         team: teamId,
-        isAssigned: true,
+        isAssigned: true
       }
     );
     return res.status(200).json({
-      message: "Project Assigned Successfully",
+      message: 'Project Assigned Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

@@ -45,6 +45,17 @@ export const getEmployeeAndStaff = () => async (dispatch) => {
     toast.error(error.response.data.error);
   }
 };
+export const updatePaymentStatus = (state) => async (dispatch) => {
+  post('/auth/updatePaymentStatus', { id: state })
+    .then((response) => {
+      toast.success('Payment is Paid');
+      dispatch(getEmployeeAndStaff());
+      dispatch(getStaff());
+    })
+    .catch((error) => {
+      toast.error(error.response.data.error);
+    });
+};
 export const updateToVip = (data) => async (dispatch) => {
   try {
     await post('/orders/updateOrderStatus', data);
@@ -66,12 +77,72 @@ export const processedOrder = () => async (dispatch) => {
     toast.error(error.response.data.error);
   }
 };
+export const wipOrder = () => async (dispatch) => {
+  try {
+    debugger;
+    const res = await get(`/orders/wipOrder`);
+    dispatch({
+      type: Type.WIP_ORDER,
+      payload: res.data
+    });
+  } catch (error) {
+    toast.error(error.response.data.error);
+  }
+};
+export const plannedOrder = () => async (dispatch) => {
+  try {
+    debugger;
+    const res = await get(`/orders/plannedOrder`);
+    dispatch({
+      type: Type.PLANNED_ORDER,
+      payload: res.data
+    });
+  } catch (error) {
+    toast.error(error.response.data.error);
+  }
+};
 export const pieChartOrders = () => async (dispatch) => {
   try {
     debugger;
     const res = await get(`/orders/pieChartOrders`);
     dispatch({
       type: Type.PIE_CHART_EMP_DATA,
+      payload: res.data
+    });
+  } catch (error) {
+    toast.error(error.response.data.error);
+  }
+};
+export const weeklyOrdersPrice = () => async (dispatch) => {
+  try {
+    debugger;
+    const res = await get(`/orders/weeklyOrdersPrice`);
+    dispatch({
+      type: Type.WEEKLY_ORDER_PRICES,
+      payload: res.data
+    });
+  } catch (error) {
+    toast.error(error.response.data.error);
+  }
+};
+export const monthlyOrdersPrice = () => async (dispatch) => {
+  try {
+    debugger;
+    const res = await get(`/orders/monthlyOrdersPrice`);
+    dispatch({
+      type: Type.MONTHLY_ORDER_PRICES,
+      payload: res.data
+    });
+  } catch (error) {
+    toast.error(error.response.data.error);
+  }
+};
+export const yearlyOrdersPrice = () => async (dispatch) => {
+  try {
+    debugger;
+    const res = await get(`/orders/yearlyOrdersPrice`);
+    dispatch({
+      type: Type.YEARLY_ORDER_PRICES,
       payload: res.data
     });
   } catch (error) {
@@ -90,6 +161,17 @@ export const updateOrderAcceptOrReject = (data) => async (dispatch) => {
   try {
     await post('/orders/updateOrderStatus', data);
     dispatch(getEmployeeOrders());
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const completedProject = (data) => async (dispatch) => {
+  try {
+    const res = get('/projects/completedProject');
+    dispatch({
+      type: Type.COMPLETED_PROJECTS,
+      payload: res.data
+    });
   } catch (error) {
     console.log(error);
   }

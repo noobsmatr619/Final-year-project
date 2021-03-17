@@ -92,7 +92,7 @@ exports.getAllChats = async (req, res, next) => {
       data: chat,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -123,6 +123,6 @@ exports.getUserChat = async (req, res, next) => {
       data: chat,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

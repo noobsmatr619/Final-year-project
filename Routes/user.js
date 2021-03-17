@@ -16,7 +16,7 @@ router.get("/", auth, async (req, res) => {
     res.json(user);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ msg: "Server Error" });
+    return res.status(500).json({ msg: "Please check all the information is filled" });
   }
 });
 router.get("/all", auth, async (req, res) => {
@@ -25,7 +25,7 @@ router.get("/all", auth, async (req, res) => {
     res.json(user);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ msg: "Server Error" });
+    return res.status(500).json({ msg: "Please check all the information is filled" });
   }
 });
 router.post("/addadmin", async (req, res) => {
@@ -49,7 +49,7 @@ router.post("/addadmin", async (req, res) => {
     res.json({});
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Server error");
+    return res.status(500).send("Please check all the information is filled");
   }
 });
 //SIGN UP
@@ -97,7 +97,7 @@ router.post("/signup", async (req, res) => {
     );
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Server error");
+    return res.status(500).send("Please check all the information is filled");
   }
 });
 
@@ -145,7 +145,7 @@ router.patch("/update/info", auth, async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Server error");
+    return res.status(500).send("Please check all the information is filled");
   }
 });
 //resset password reset
@@ -210,7 +210,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Server error");
+    return res.status(500).send("Please check all the information is filled");
   }
 });
 

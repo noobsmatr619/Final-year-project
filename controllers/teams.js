@@ -26,7 +26,7 @@ exports.createTeam = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -39,7 +39,7 @@ exports.getAllTeams = async (req, res, next) => {
       data: tasks,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -59,6 +59,6 @@ exports.getMyTeams = async (req, res, next) => {
       data: tasks,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

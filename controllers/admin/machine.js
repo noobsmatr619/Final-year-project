@@ -1,5 +1,5 @@
-const Machine = require("../../Models/Machine");
-const { sendServerError } = require("./../../utils/errors/serverError");
+const Machine = require('../../Models/Machine');
+const { sendServerError } = require('./../../utils/errors/serverError');
 
 //@desc Create New Machine
 //@route POST /api/v1/admin/machines/addNewMachine
@@ -13,14 +13,14 @@ exports.addNewMachine = async (req, res, next) => {
       model,
       build,
       status,
-      target,
+      target
     });
     res.status(200).json({
       data: machine,
-      message: "Machine Added Succsfull",
+      message: 'Machine Added Succsfull'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -30,12 +30,35 @@ exports.addNewMachine = async (req, res, next) => {
 
 exports.getAllMachines = async (req, res, next) => {
   try {
-    const machines = await Machine.find({ status: 1 });
+    //old code
+    // const machines = await Machine.find({ status: 1 });
+    //new one
+    const machines = await Machine.find();
     res.status(200).json({
-      data: machines,
+      data: machines
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
+  }
+};
+
+exports.getAllMachinesWithAnyStatus = async (req, res, next) => {
+  try {
+    const machines = await Machine.find();
+    res.status(200).json(machines);
+  } catch (error) {
+    return sendServerError(res, 500, "Please check all the information is filled");
+  }
+};
+
+exports.getSingleMachineDetails = async (req, res, next) => {
+  try {
+    const machine = await Machine.findById({ _id: req.params.machineId });
+    console.log('machine');
+    console.log(machine);
+    res.status(200).json(machine);
+  } catch (error) {
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -46,15 +69,15 @@ exports.getAllMachines = async (req, res, next) => {
 exports.getSingleMachine = async (req, res, next) => {
   const { id } = req.query;
   if (!id) {
-    return sendServerError(res, 400, "Please Add Mahine Id");
+    return sendServerError(res, 400, 'Please Add Mahine Id');
   }
   try {
     const machines = await Machine.findById(id);
     res.status(200).json({
-      data: machines,
+      data: machines
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -65,7 +88,7 @@ exports.getSingleMachine = async (req, res, next) => {
 exports.updateMachine = async (req, res, next) => {
   const { id, name, model, build, target, status } = req.body;
   if (!id) {
-    return sendServerError(res, 400, "Please Add Mahine Id");
+    return sendServerError(res, 400, 'Please Add Mahine Id');
   }
   try {
     await Machine.findByIdAndUpdate(id, {
@@ -73,13 +96,13 @@ exports.updateMachine = async (req, res, next) => {
       model,
       build,
       status,
-      target,
+      target
     });
     res.status(200).json({
-      message: "Machine updated Successfully",
+      message: 'Machine updated Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -90,15 +113,15 @@ exports.updateMachine = async (req, res, next) => {
 exports.deleteMachine = async (req, res, next) => {
   const { id } = req.body;
   if (!id) {
-    return sendServerError(res, 400, "Please Add Mahine Id");
+    return sendServerError(res, 400, 'Please Add Mahine Id');
   }
   try {
     await Machine.findByIdAndDelete(id);
     res.status(200).json({
-      message: "Machine Deleted Successfully",
+      message: 'Machine Deleted Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -109,18 +132,18 @@ exports.deleteMachine = async (req, res, next) => {
 exports.goOnMaintainanceMood = async (req, res, next) => {
   const { id } = req.body;
   if (!id) {
-    return sendServerError(res, 400, "Please Add Mahine Id");
+    return sendServerError(res, 400, 'Please Add Mahine Id');
   }
   try {
     await Machine.findByIdAndUpdate(id, {
       status: 0,
-      stopTime: new Date(),
+      stopTime: new Date()
     });
     res.status(200).json({
-      message: "Machine Go On Maintanance Mood",
+      message: 'Machine Go On Maintanance Mood'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -132,10 +155,10 @@ exports.getMaintainanceMoodMachines = async (req, res, next) => {
   try {
     const machines = await Machine.find({ status: 0 });
     res.status(200).json({
-      data: machines,
+      data: machines
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -148,9 +171,21 @@ exports.updateMachineTarget = async (req, res, next) => {
   try {
     await Machine.findByIdAndUpdate(id, { target });
     res.status(200).json({
-      data: "New Target Set For next 24 Hours",
+      data: 'New Target Set For next 24 Hours'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
+  }
+};
+
+exports.updateMachineInformation = async (req, res, next) => {
+  const { name, target, model,id } = req.body;
+  try {
+    await Machine.findByIdAndUpdate(id, { name, target, model });
+    res.status(200).json({
+      data: 'Machine information updated, New Target Set For next 24 Hours'
+    });
+  } catch (error) {
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

@@ -16,7 +16,7 @@ exports.paySalary = async (req, res, next) => {
       message: "Salary Paid",
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -31,6 +31,6 @@ exports.getSalaries = async (req, res, next) => {
       data: salaries,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

@@ -1,18 +1,21 @@
-const multer = require("multer");
-const Datauri = require("datauri/parser");
-const path = require("path");
-const storage = multer.memoryStorage();
-const multerUploads = multer({ storage }).single("image");
-const dUri = new Datauri();
-/**
- * @description This function converts the buffer to data url
- * @param {Object} req containing the field object
- * @returns {String} The data url from the string buffer
- */
-const dataUri = req =>
-  dUri.format(path.extname(req.file.originalname), req.file.buffer);
+const multer = require('multer');
+const { cloudinary } = require('./config/cloudinaryConfiguration');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+var multerUploads;
+try {
+  const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'CRM',
+      format: async () => 'jpg',
+      public_id: (req, file) => file.filename
+    }
+  });
+  multerUploads = multer({ storage: storage }).single('image');
+} catch (error) {
+  console.log(error);
+}
 
 module.exports = {
-  multerUploads,
-  dataUri,
+  multerUploads
 };
