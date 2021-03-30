@@ -14,7 +14,7 @@ const {
   updatePaymentStatus,
   deleteUser
 } = require('./../controllers/auth');
-const { protect } = require('../middleware/auth');
+const { protect } = require('./../middleware/auth');
 router.post('/registerUser', registerAdmin);
 router.post('/approveuser', approveuser);
 router.post('/login', login);
