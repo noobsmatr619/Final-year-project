@@ -1,0 +1,16 @@
+.bg-sky{
+    background: #58A8CD;
+}
+.bg-orange{
+    background: #CD9042;
+}
+.chat-top{
+    background: #58A8CD;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+}
+.send{
+    display: flex;
+    
+}

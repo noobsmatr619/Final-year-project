@@ -1,0 +1,104 @@
+
+
+  .login-register-wrapper {
+      width: 50%;
+      margin-left: auto;
+      margin-right: auto;
+      padding:0 2em;
+      border-radius: 5px;
+      box-shadow: 0px 2px 7px rgba(0,0,0,0.2);
+      overflow: hidden; 
+      color:#ffffff;
+      background: linear-gradient(180deg, rgb(144, 208, 228) 0%, rgba(22,147,198,1) 52%, rgba(22,147,198,1) 82%);
+  }
+  
+  /* Nav buttons */
+  .nav-buttons {
+    width: 100%;
+    height: 100px;
+    padding-top: 40px;
+    opacity: 1;
+    margin-bottom: 3em;
+    display: flex;
+  }
+  .scroll-btn {
+      font-size: 1.2em;
+      margin-right:1em;
+      border:0px;
+      cursor: pointer;
+   
+  }
+  .scroll-btn>button:focus {
+      outline: 0px;
+  }
+  .scroll-btn.active {
+      padding-bottom: 10px;
+      border-bottom: solid 2px #1059FF;
+  } 
+  
+   /* footer: forgot section */
+   .forgot-panel {
+    position: relative;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    color: white !important;
+    border-top: solid 1px rgba(255,255,255,.3);    
+}
+
+    /* form styling */
+    .form-group1 input {
+        width: 100%;
+        height: 35px;
+        padding-left: 15px;
+        border: none;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        background: rgba(255,255,255,.5);
+    }
+    .form-group1 label {
+      text-transform: uppercase;
+    }
+    .form-group1 input.submit {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 1em;
+        text-align: center;
+        color: rgba(255,255,255, 1);
+        padding: 8px 0px;
+        width: 100%;
+        height: 35px;
+        border: none;
+        border-radius: 20px;
+        margin-top: 23px;
+        background-color: rgba(16,89,255, 1);
+    
+    }
+
+    /*Form positioning and animation */
+
+    form#registerform {
+        left:500px;
+        top:-230px;
+        position:relative;
+    }
+
+    .forgot-panel {
+        margin-top:-300px;
+        color:gray;
+    }
+
+    .form-group1>form, .forgot-panel { 
+        position: relative;
+        transition: all .1s ease;
+    }
+    #loginBtn, #registerBtn {
+        transition: all .1s ease;
+
+    }
+@media screen and (max-width: 600px) {
+  .login-register-wrapper {
+    width: 90%;
+  }
+}
