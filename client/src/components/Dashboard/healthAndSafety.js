@@ -11,18 +11,18 @@ class HealthSafety extends Component {
         <Header />
         <Container fluid>
           <Row>
-            <Col lg={5} md={5} xs={12}>
-              <h3>Form</h3>
+            <Col lg={5} md={5} xs={12} className='p-3 bg-shadow'>
+              <h3 className='p-3'>Form</h3>
               <HealthSafetyForm />
             </Col>
             <Col lg={7} md={7} xs={12}>
               <Row>
                 <Col lg={12} md={12} xs={12}>
-                  <h3>Accident Prone Areas</h3>
+                  <h3 className='p-3'>Accident Prone Areas</h3>
                   <TopContainer />
                 </Col>
                 <Col lg={12} md={12} xs={12}>
-                  <h3>Recent Accidents</h3>
+                  <h3 className='p-3'>Recent Accidents</h3>
                   <ButtomContainer />
                 </Col>
               </Row>

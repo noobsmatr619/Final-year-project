@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Header from "../../pages/Header/Header";
+import Header from "./../../pages/Header/Header";
 class HomePage extends Component {
   render() {
     return (
       <>
         <Header />
-        <h3>Abrar Tajwar</h3>
+        <h3>Hamza Joshi</h3>
       </>
     );
   }

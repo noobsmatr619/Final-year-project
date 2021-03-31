@@ -65,13 +65,13 @@ function Header() {
           <br />
           <Link to='/' className='iconStyle'>
             {" "}
-            <span className='each-span headerOptLineTwo' id='abrar'>
+            <span className='each-span headerOptLineTwo' id='joshi'>
               Home
             </span>{" "}
           </Link>
         </div>
         <div className='headerLeftOpt'>
-          <Link to='/' className='iconStyle'>
+          <Link to='/reports' className='iconStyle'>
             <span className='each-span headerOptLineOne'>
               {" "}
               <ShowChartIcon />{" "}
@@ -81,7 +81,7 @@ function Header() {
           </Link>
         </div>
         <div className='headerLeftOpt  '>
-          <Link to='/blog' className='iconStyle'>
+          <Link to='/chat' className='iconStyle'>
             {" "}
             <span className='each-span headerOptTLineOne'>
               <ChatIcon />
@@ -91,13 +91,13 @@ function Header() {
           </Link>
         </div>
         <div className='headerLeftOpt  '>
-          <Link to='/blog' className='iconStyle'>
+          <Link to='/stock' className='iconStyle'>
             {" "}
             <span className='each-span headerOptTLineOne'>
               <AccountBalanceIcon />
             </span>
             <br />
-            <span className='each-span headerOptLineTwo'> Proction</span>{" "}
+            <span className='each-span headerOptLineTwo'> Stock</span>{" "}
           </Link>
         </div>
         <div className='headerLeftOpt  '>
@@ -134,7 +134,7 @@ function Header() {
       <div className='headerRightNav'>
         <span className='each-span headerBasketCount'></span>
 
-        <Link to='/'>
+        <Link to='/login'>
           <span className='each-span headerRightOption'>
             <AccountCircleIcon />
           </span>
