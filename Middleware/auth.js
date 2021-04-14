@@ -26,7 +26,7 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-// Grant access to specific roles
+// Grant access to specific roles finalise
 exports.authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.type)) {
