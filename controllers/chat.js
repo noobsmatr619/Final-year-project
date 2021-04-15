@@ -2,7 +2,7 @@
 const { encrypt, decrypt } = require("./../utils/encryptions");
 //importing Models
 
-const Chat = require("./../models/Chat");
+const Chat = require("./../Models/Chat");
 
 const { sendServerError } = require("./../utils/errors/serverError");
 
