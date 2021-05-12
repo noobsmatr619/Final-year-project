@@ -29,6 +29,7 @@ describe('Tests', () => {
 
     it('should register a user', async () => {
       //user information
+      process.env.JWT_EXPIRE = '3d'
       const registerUser = {
         displayName: 'John',
         email: 'testUser1@test4.com',
@@ -77,6 +78,7 @@ describe('Tests', () => {
     });
 
     it('should successfully login', async () => {
+      process.env.JWT_EXPIRE = '3d' 
       await request(server)
         .post('/api/v1/auth/login')
         .send({
