@@ -9,18 +9,19 @@ install:
 - npm install express
 - npm ci
 env:
-  -MONGODB_URI=mongodb+srv://admin:Plymouth.0410@dmc.7r25y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-  -MONGODB_URI_TEST=mongodb+srv://admin:Plymouth.0410@dmc.7r25y.mongodb.net/dummyDMC?retryWrites=true&w=majority
-  -jwtsecret= smatr619
-  -emailPassword=Plymouth.0410
-  -PORT=5000
-  -PORT_TEST=4000
-  -JWT_SECRET =pakistan
-  -JWT_EXPIRE =3d
-  -JWT_COOKIE_EXPIRE =30
-  -CLOUDINARY_CLOUD_NAME=dmcup
-  -CLOUDINARY_API_KEY=574369833195236
-  -CLOUDINARY_API_SECRET=dWgEmmvlYrECPNDTIXatKQp-cqU
+  global:
+    -MONGODB_URI=mongodb+srv://admin:Plymouth.0410@dmc.7r25y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+    -MONGODB_URI_TEST=mongodb+srv://admin:Plymouth.0410@dmc.7r25y.mongodb.net/dummyDMC?retryWrites=true&w=majority
+    -jwtsecret= smatr619
+    -emailPassword=Plymouth.0410
+    -PORT=5000
+    -PORT_TEST=4000
+    -JWT_SECRET =pakistan
+    -JWT_EXPIRE =3d
+    -JWT_COOKIE_EXPIRE =30
+    -CLOUDINARY_CLOUD_NAME=dmcup
+    -CLOUDINARY_API_KEY=574369833195236
+    -CLOUDINARY_API_SECRET=dWgEmmvlYrECPNDTIXatKQp-cqU
 script:
 - npm run testAll
 
