@@ -32,9 +32,10 @@ describe('Tests', () => {
       process.env.JWT_EXPIRE = '3d'
       const registerUser = {
         displayName: 'John',
-        email: 'testUser1@test4.com',
+        email: 'testUser1@gmail.com',
         password: 'Test1234!',
-        actualName: 'testssz'
+        actualName: 'testssz',
+        type:'staff'
       };
       await request(server)
         .post('/api/v1/auth/registerUser')
@@ -82,7 +83,7 @@ describe('Tests', () => {
       await request(server)
         .post('/api/v1/auth/login')
         .send({
-          email: 'testUser1@test4.com',
+          email: 'testUser1@gmail.com',
           password: 'Test1234!'
         })
         .expect(200);
