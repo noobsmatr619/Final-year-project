@@ -52,10 +52,10 @@ export const getAllProject = () => async (dispatch) => {
       payload: projects.data.data
     });
   } catch (error) {
-    debugger;
+    // debugger;
     const token = localStorage.getItem('CRM_TOKEN');
-    console.log(token);
-    debugger;
+    // console.log(token);
+    // debugger;
     console.log(error);
   }
 };

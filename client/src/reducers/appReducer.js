@@ -1,4 +1,5 @@
 import * as Type from '../actions/types';
+import { useHistory } from 'react-router-dom';
 const initialState = {
   token: localStorage.getItem('CRM_TOKEN'),
   isAuth: false,
@@ -80,6 +81,7 @@ export default (state = initialState, action) => {
       };
     case Type.REGISTER_USER:
       localStorage.setItem('CRM_TOKEN', action.payload.token);
+      localStorage.setItem('user_type', action.payload.user.type);
       return {
         ...state,
         token: action.payload.token,
@@ -87,13 +89,16 @@ export default (state = initialState, action) => {
       };
     case Type.LOGIN_USER:
       localStorage.setItem('CRM_TOKEN', action.payload.token);
+      localStorage.setItem('user_type', action.payload.user.type);
       return {
         ...state,
         token: action.payload.token,
         isAuth: true
       };
     case Type.LOGOUT_USER:
-      localStorage.removeItem('CRM_TOKEN');
+      // localStorage.removeItem('CRM_TOKEN');
+      // localStorage.removeItem('user_type');
+      localStorage.clear();
       return {
         ...state,
         token: null,
@@ -147,6 +152,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         projects: action.payload
+      };
+
+    case Type.LOAD_USER:
+      localStorage.setItem('type', action.payload.type);
+      return {
+        ...state
       };
     default:
       return state;

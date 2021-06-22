@@ -6,6 +6,7 @@ import { registerUser, loginUser } from '../../actions/authActions';
 import { connect } from 'react-redux';
 import { baseUrl } from './../../baseUrl';
 import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 class Authentication extends Component {
   constructor(props) {
     super(props);
@@ -64,8 +65,12 @@ class Authentication extends Component {
         error: 'Password MisMatch'
       });
     } else {
-      //Posting Data
-      await this.props.registerUser(this.state, this.props.history);
+      try {
+        //Posting Data
+        await this.props.registerUser(this.state, this.props.history);
+      } catch (error) {
+        this.props.history.push('/auth');
+      }
     }
   };
   handleLogin = async (e) => {
@@ -94,7 +99,11 @@ class Authentication extends Component {
         email: loginEmail,
         password: loginPassword
       };
-      await this.props.loginUser(dataToSend, this.props.history);
+      try {
+        await this.props.loginUser(dataToSend, this.props.history);
+      } catch (error) {
+        this.props.history.push('/auth');
+      }
     }
   };
 
@@ -144,7 +153,7 @@ class Authentication extends Component {
     // if (localStorage.getItem("CRM_TOKEN")) {
     //   this.props.history.push("/");
     // }
-    debugger;
+    // debugger;
     // if (this.props.isAuth) {
     //   return <Redirect to='/user-management' />;
     // }

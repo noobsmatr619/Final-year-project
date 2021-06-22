@@ -60,7 +60,6 @@ function approveAsEmployee(params) {
 }
 
 class Admin extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -143,36 +142,38 @@ class Admin extends Component {
 
       unApproveUsers: [],
       approveUsers: [],
-      deleteUser : false
+      deleteUser: false
     };
   }
   componentDidMount() {
     this.getAllUsers();
   }
   getAllUsers = () => {
-    Axios.get(`${baseUrl}/auth/getAllUsers`)
-      .then((response) => {
-        const data = response.data.data;
-        console.log('data', data);
-        let unApproveUsers = [];
-        let approveUsers = [];
-        data.forEach((user) => {
-          if (user._id !== this.props.userMain._id) {
-            if (user.status == false) {
-              unApproveUsers.push(user);
-            } else {
-              approveUsers.push(user);
+    if (localStorage.getItem('CRM_TOKEN')) {
+      Axios.get(`${baseUrl}/auth/getAllUsers`)
+        .then((response) => {
+          const data = response.data.data;
+          console.log('data', data);
+          let unApproveUsers = [];
+          let approveUsers = [];
+          data.forEach((user) => {
+            if (user._id !== this.props.userMain._id) {
+              if (user.status == false) {
+                unApproveUsers.push(user);
+              } else {
+                approveUsers.push(user);
+              }
             }
-          }
+          });
+          this.setState({
+            unApproveUsers,
+            approveUsers
+          });
+        })
+        .catch((error) => {
+          Swal(error.response.error);
         });
-        this.setState({
-          unApproveUsers,
-          approveUsers
-        });
-      })
-      .catch((error) => {
-        Swal(error.response.error);
-      });
+    }
   };
   ApproveUser = (data) => {
     console.log(data);
@@ -231,7 +232,7 @@ class Admin extends Component {
   /***
    * Delete user from database
    */
-  deleteUser = async ({id}) => {
+  deleteUser = async ({ id }) => {
     try {
       const response = await Axios.delete(`${baseUrl}/auth/users/${id}`);
       this.getAllUsers();
@@ -241,7 +242,7 @@ class Admin extends Component {
   };
   onCellClickedDeleteUser = (e) => {
     console.log(e.colDef.headerName, e.data);
-    this.deleteUser({id: e.data.id});
+    this.deleteUser({ id: e.data.id });
   };
   render() {
     return (
