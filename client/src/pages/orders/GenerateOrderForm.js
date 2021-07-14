@@ -188,5 +188,3 @@ class GenerateOrderForm extends Component {
 }
 
 export default GenerateOrderForm;
-
-
