@@ -1,0 +1,7 @@
+.bootstrap-timepicker-widget table tr:nth-child(3) > td:last-child a {
+  display: none !important;
+}
+
+.bootstrap-timepicker-widget table tr:nth-child(1) > td:last-child a {
+  display: none !important;
+}
