@@ -5,13 +5,14 @@ const { sendServerError } = require("./../utils/errors/serverError");
 //@access private
 
 exports.addNewRawMaterial = async (req, res, next) => {
-  const { type, count, machine, name } = req.body;
+  const { type, count, machine, name, price } = req.body;
   try {
     const rawMaterial = await RawMaterial.create({
       type,
       count,
       machine,
       name,
+      price
     });
     res.status(200).json({
       data: rawMaterial,
@@ -141,5 +142,23 @@ exports.putInStock = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     return sendServerError(res, 500, "Please check all the information is filled");
+  }
+};
+
+
+exports.getAllRawMaterialsPrices = async (req, res, next) => {
+  try {
+    const rawMaterials = await RawMaterial.find();
+     const rawMaterialsPrice = rawMaterials.reduce(
+       (acc, material) => Number(material.price) + acc,
+       0
+     );
+    res.status(200).json(rawMaterialsPrice);
+  } catch (error) {
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };

@@ -78,38 +78,16 @@ io.on('connection', (socket) => {
   });
 });
 
-io.on('connect', (socket) => {
-  socket.on('join', ({ name, profile }, callback) => {
-    console.log('joshi');
-    console.log(name, profile);
-    if (name == null || profile == null) {
-      return;
-    }
-
-    const { error, user } = addUser({ id: socket.id, name, profile });
-
-    if (error) return callback(error);
-
-    callback();
-  });
+io.on('connection', (socket) => {
 
   socket.on('sendMessage', (chat) => {
-    console.log('chat', chat);
     const message = {
       createdAt: Date.now(),
       text: chat.message,
       sender: chat.sender,
       reciever: chat.reciever
     };
-
-    let reciver = getUser(chat.reciever);
-
-    if (reciver) {
-      const recieverSocket = reciver.id;
-      console.log('reciever socket', recieverSocket);
-      io.to(`${recieverSocket}`).emit('message', message);
-    }
-    io.to(`${socket.id}`).emit('message', message);
+    io.emit('send_back_message', message);
   });
 
   socket.on('disconnect', () => {

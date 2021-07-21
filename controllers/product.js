@@ -3,6 +3,7 @@ const JsBarcode = require('jsbarcode');
 const { DOMImplementation, XMLSerializer } = require('xmldom');
 const mongoose = require('mongoose');
 const Product = require('../Models/Product');
+const Order = require('../Models/Order');
 const ProductMachine = require('../Models/ProductMachine');
 const { sendServerError } = require('./../utils/errors/serverError');
 
@@ -21,7 +22,11 @@ const { sendServerError } = require('./../utils/errors/serverError');
 exports.createBarCode = async (req, res, next) => {
   try {
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -84,7 +89,11 @@ exports.createProduct = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
   //     })
   //     .catch((err) => {
@@ -107,7 +116,11 @@ exports.getAllProducts = async (req, res, next) => {
       data: products
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -127,7 +140,11 @@ exports.getSingleProduct = async (req, res, next) => {
       data: product
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -155,7 +172,11 @@ exports.updateSingleProduct = async (req, res, next) => {
       message: 'Product Details Updated Succesfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -172,7 +193,11 @@ exports.deleteSingleProduct = async (req, res, next) => {
       message: 'Product Deleted Succesfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -193,7 +218,11 @@ exports.addProductByMachine = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -212,13 +241,42 @@ exports.getProductsProduced = async (req, res, next) => {
         path: 'product',
         select: 'id name'
       });
+    console.log('ProductMachine');
+    console.log(products);
+
     return res.status(200).json({
       success: true,
       data: products
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
+  }
+};
+
+exports.getProductsDone = async (req, res, next) => {
+  try {
+    const orders = await Order.find({ status: 3 });
+    const allProductsIds = orders.map(order => order.product)
+    const products = await Product.find({ _id: allProductsIds });
+    console.log('products');
+    console.log(products);
+
+    return res.status(200).json({
+      success: true,
+      data: products
+    });
+  } catch (error) {
+    console.log(error);
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -240,6 +298,10 @@ exports.rejectProductsCount = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
