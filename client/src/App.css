@@ -7,3 +7,18 @@ body {
   top: 50% !important;
   left: 50% !important;
 }
+.text-sm{
+  font-size: 70%;
+}
+.text-grey{
+  color:grey
+}
+.bg-sky{
+    background: #58A8CD;
+}
+.text-sky{
+  color: #58A8CD;
+}
+.text-orange{
+  color: #CD9042;
+}

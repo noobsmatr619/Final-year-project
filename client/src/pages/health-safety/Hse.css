@@ -1,0 +1,147 @@
+.sigCanvas{
+    border-style: solid;
+    border-color: coral;
+
+  
+}
+
+.clearButton{
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: #778899;
+    color: whitesmoke;
+}
+.saveButton{
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: #90ee90;
+
+}
+
+.changeColor{
+
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: #FFFFE0;
+    /* color: whitesmoke; */
+}
+
+.human-body {
+    width: 207px;
+    position: relative;
+    padding-top: 240px;
+    height: 260px;
+    display: block;
+    margin: 40px auto;
+}
+
+.human-body svg:hover {
+    cursor: pointer;
+}
+
+.human-body svg:hover path {
+    fill: red;
+}
+
+.human-body svg {
+    position: absolute;
+    left: 50%;
+    fill: #57c9d5;
+}
+
+.human-body svg#head {
+    margin-left: -19.9px;
+    top: -6px;
+}
+
+.human-body svg#left-shoulder {
+    margin-left: -53.5px;
+    top: 69px;
+}
+
+/* .human-body svg#right-shoulder {
+    margin-left: 13.5px;
+    top: 69px;
+} */
+
+/* .human-body svg#left-arm {
+    margin-left: -78px;
+    top: 112px;
+} */
+/* 
+.human-body svg#right-arm {
+    margin-left: -72px;
+    width: 100px;
+    top: 88px;
+    z-index: 10001;
+} */
+
+.human-body svg#chest {
+    margin-left: -33.5px;
+    top: 78px;
+}
+
+.human-body svg#stomach {
+    margin-left: -43.5px;
+    top: 119px;
+}
+
+.human-body svg#left-leg {
+    margin-left: -33.5px;
+    top: 185px;
+    /* z-index: 9999; */
+}
+
+/* .human-body svg#right-leg {
+    margin-left: 1.5px;
+    top: 205px;
+    z-index: 9999;
+} */
+
+.human-body svg#left-hand {
+    margin-left: -82.5px;
+    top: 24px;
+}
+
+.human-body svg#right-hand {
+    margin-left: 40.5px;
+    top: 24px;
+    /* z-index: 10000; */
+}
+
+.human-body svg#left-palm {
+    margin-left: -109.5px;
+    top: 119px;
+}
+
+.human-body svg#right-palm {
+    margin-left: 80.5px;
+    top: 119px;
+    /* z-index: 10000; */
+}
+
+.human-body svg#left-foot {
+    margin-left: -18px;
+    top: 395px;
+}
+
+.human-body svg#right-foot {
+    margin-left: 5.5px;
+    top: 455px;
+}
+
+#area {
+    /* display: block; */
+    width: 100%;
+    clear: both;
+    padding: 10px;
+    text-align: center;
+    font-size: 25px;
+    font-family: Courier New;
+    color: #a5a5a5;
+    padding-top: 100%;
+}
+
+#area #data {
+    color: black;
+}
