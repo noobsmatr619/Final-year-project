@@ -1,23 +1,18 @@
 const multer = require("multer");
-var uuid = require("uuid");
-const MIME_TYPE_MAP = {
-  "image/png": "png",
-  "image/jpeg": "jpeg",
-  "image/jpg": "jpg",
-};
+const Datauri = require("datauri/parser");
+const path = require("path");
+const storage = multer.memoryStorage();
+const multerUploads = multer({ storage }).single("image");
+const dUri = new Datauri();
+/**
+ * @description This function converts the buffer to data url
+ * @param {Object} req containing the field object
+ * @returns {String} The data url from the string buffer
+ */
+const dataUri = req =>
+  dUri.format(path.extname(req.file.originalname), req.file.buffer);
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // cb(null, "client/build/uploads"); for production
-    // for degug
-    cb(null, "public/uploads");
-  },
-  filename: function (req, res, cb) {
-    const ext = MIME_TYPE_MAP[res.mimetype];
-    cb(null, uuid.v1() + "." + ext);
-  },
-});
-module.exports = multer({
-  storage: storage,
-  limits: { fieldSize: "100MB ", fieldSize: "100MB" },
-});
+module.exports = {
+  multerUploads,
+  dataUri,
+};
