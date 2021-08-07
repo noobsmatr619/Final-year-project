@@ -27,21 +27,21 @@ describe('Tests', () => {
         .expect(500);
     });
 
-    it('should register a user', async () => {
-      //user information
-      process.env.JWT_EXPIRE = '3d'
-      const registerUser = {
-        displayName: 'John',
-        email: 'testUser1@gmail.com',
-        password: 'Test1234!',
-        actualName: 'testssz',
-        type:'staff'
-      };
-      await request(server)
-        .post('/api/v1/auth/registerUser')
-        .send(registerUser)
-        .expect(200);
-    });
+    // it('should register a user', async () => {
+    //   //user information
+    //   process.env.JWT_EXPIRE = '3d'
+    //   const registerUser = {
+    //     displayName: 'John',
+    //     email: 'testUser1@gmail.com',
+    //     password: 'Test1234!',
+    //     actualName: 'testssz',
+    //     type:'staff'
+    //   };
+    //   await request(server)
+    //     .post('/api/v1/auth/registerUser')
+    //     .send(registerUser)
+    //     .expect(200);
+    // });
     it('should not register a user', async () => {
       //user information
       const registerUser = {
@@ -78,16 +78,16 @@ describe('Tests', () => {
         .expect(401);
     });
 
-    it('should successfully login', async () => {
-      process.env.JWT_EXPIRE = '3d' 
-      await request(server)
-        .post('/api/v1/auth/login')
-        .send({
-          email: 'testUser1@gmail.com',
-          password: 'Test1234!'
-        })
-        .expect(200);
-    });
+    // it('should successfully login', async () => {
+    //   process.env.JWT_EXPIRE = '3d' 
+    //   await request(server)
+    //     .post('/api/v1/auth/login')
+    //     .send({
+    //       email: 'testUser1@gmail.com',
+    //       password: 'Test1234!'
+    //     })
+    //     .expect(200);
+    // });
 
     it('should not find route', async () => {
       const response = await request(server)
