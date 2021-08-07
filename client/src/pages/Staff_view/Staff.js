@@ -5,6 +5,8 @@ import {
   updateToVip,
   updateOrderDone
 } from '../../actions/staffAction';
+import { getMyTeams } from '../../actions/teamsActions';
+import { getAllProject } from '../../actions/projectActions';
 import Loader from 'react-loader-spinner';
 import './Staff.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -15,8 +17,10 @@ import Big from './Big';
 // import Swal from "sweetalert";
 const Staff = () => {
   const dispatch = useDispatch();
-  const { employeeOrder } = useSelector((state) => ({
-    employeeOrder: state.app.orderForStaff
+  const { employeeOrder, myTeam, projects } = useSelector((state) => ({
+    employeeOrder: state.app.orderForStaff,
+    myTeam: state.app.myTeam,
+    projects: state.app.projects
   }));
   // const [orders, setOrders] = useState([]);
   const [isLoading, setisLoading] = useState(false);
@@ -27,6 +31,8 @@ const Staff = () => {
     const runAction = async () => {
       setisLoading(false);
       await dispatch(await getEmployeeOrdersForStaffPage());
+      await dispatch(await getMyTeams());
+      await dispatch(await getAllProject());
       setisLoading(true);
     };
     runAction();
@@ -35,7 +41,7 @@ const Staff = () => {
     // axios
     //   .get(baseUrl + "/teams/getMyTeams", {
     //     headers: {
-    //       Authorization: "Bearer " + localStorage.getItem("token"),
+    //       Authorization: "Bearer " + localStorage.getItem("CRM_TOKEN"),
     //     },
     //   })
     //   .then(response => {
@@ -61,7 +67,7 @@ const Staff = () => {
     // axios
     //   .post(baseUrl + "/orders/updateOrderStatus", preData, {
     //     headers: {
-    //       Authorization: "Bearer " + localStorage.getItem("token"),
+    //       Authorization: "Bearer " + localStorage.getItem("CRM_TOKEN"),
     //     },
     //   })
     //   .then(response => {
@@ -69,7 +75,7 @@ const Staff = () => {
     //     axios
     //       .get(baseUrl + "/orders/getEmployeeOrders", {
     //         headers: {
-    //           Authorization: "Bearer " + localStorage.getItem("token"),
+    //           Authorization: "Bearer " + localStorage.getItem("CRM_TOKEN"),
     //         },
     //       })
     //       .then(response => {
@@ -100,7 +106,7 @@ const Staff = () => {
     // axios
     //   .post(baseUrl + "/orders/updateOrderStatus", preData, {
     //     headers: {
-    //       Authorization: "Bearer " + localStorage.getItem("token"),
+    //       Authorization: "Bearer " + localStorage.getItem("CRM_TOKEN"),
     //     },
     //   })
     //   .then(response => {
@@ -108,7 +114,7 @@ const Staff = () => {
     //     axios
     //       .get(baseUrl + "/orders/getEmployeeOrders", {
     //         headers: {
-    //           Authorization: "Bearer " + localStorage.getItem("token"),
+    //           Authorization: "Bearer " + localStorage.getItem("CRM_TOKEN"),
     //         },
     //       })
     //       .then(response => {
@@ -143,7 +149,7 @@ const Staff = () => {
         <h1>Staff view</h1>
         <Row className="mt-5">
           <Col md={12} sm={12}>
-            <Big></Big>
+            <Big projects={projects}></Big>
           </Col>
         </Row>
         <Row>
@@ -289,6 +295,37 @@ const Staff = () => {
               <li className="list-group-item bg-sky text-white">
                 <strong>Teams</strong>
               </li>
+              {myTeam.map((filteredOrders) => (
+                <li className="list-group-item ">
+                  <div className="d-flex justify-content-between">
+                    <p>Assigned To</p>
+                    <p id={filteredOrders._id}>{filteredOrders.team.name}</p>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <p>Member</p>
+                    <p id={filteredOrders._id}>{filteredOrders.memberName}</p>
+                  </div>
+                  {/* <div className="d-flex justify-content-between">
+                      <p>Assigned </p>
+                      <p id={filteredOrders._id}>{filteredOrders.assignedTo}</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <p>Product </p>
+                      <p id={filteredOrders._id}>
+                        {filteredOrders.product.name}
+                      </p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <p>Quantity </p>
+                      <p id={filteredOrders._id}>{filteredOrders.count}</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <p>Provider </p>
+                      <p id={filteredOrders._id}>{filteredOrders.provider}</p>
+                    </div> */}
+                  <hr />
+                </li>
+              ))}
             </ListGroup>
           </Col>
         </Row>

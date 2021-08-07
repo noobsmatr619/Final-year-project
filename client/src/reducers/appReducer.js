@@ -12,6 +12,8 @@ const initialState = {
   myTeam: [],
   teams: [],
   processedOrder: 0,
+  wipOrder: 0,
+  plannedOrder: 0,
   empPieChart: {
     monday: 0,
     tuesday: 0,
@@ -21,20 +23,60 @@ const initialState = {
     saturday: 0,
     sunday: 0
   },
-  projects: []
+  weeklyOrdersPrice: 0,
+  monthlyOrdersPrice: 0,
+  yearlyOrdersPrice: 0,
+  projects: [],
+  accidents: [],
+  locationAccidents: []
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => {
   switch (action.type) {
+    case Type.GET_ACCIDENT:
+      return {
+        ...state,
+        accidents: action.payload
+      };
+    case Type.GET_LOCATION_ACCIDENT:
+      return {
+        ...state,
+        locationAccidents: action.payload
+      };
     case Type.PIE_CHART_EMP_DATA:
       return {
         ...state,
         empPieChart: action.payload
       };
+    case Type.WEEKLY_ORDER_PRICES:
+      return {
+        ...state,
+        weeklyOrdersPrice: action.payload
+      };
+    case Type.MONTHLY_ORDER_PRICES:
+      return {
+        ...state,
+        monthlyOrdersPrice: action.payload
+      };
+    case Type.YEARLY_ORDER_PRICES:
+      return {
+        ...state,
+        yearlyOrdersPrice: action.payload
+      };
     case Type.PROCESSED_ORDER:
       return {
         ...state,
         processedOrder: action.payload
+      };
+    case Type.PLANNED_ORDER:
+      return {
+        ...state,
+        plannedOrder: action.payload
+      };
+    case Type.WIP_ORDER:
+      return {
+        ...state,
+        wipOrder: action.payload
       };
     case Type.REGISTER_USER:
       localStorage.setItem('CRM_TOKEN', action.payload.token);

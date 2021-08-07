@@ -52,7 +52,7 @@ const Create = () => {
                     <Form.Control type="number" value={target} onChange={e => setTarget(e.target.value)} placeholder="Target..." />
                 </Form.Group>
 
-                <Button className='btn-block mt-3 mb-3' variant="primary" type="submit">
+                <Button data-testid="add-machine" className='btn-block mt-3 mb-3' variant="primary" type="submit">
                     Add
                             </Button>
             </Form>

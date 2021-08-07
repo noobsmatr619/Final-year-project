@@ -5,7 +5,9 @@ import axios from 'axios';
 import {
   updateOrderAcceptOrReject,
   processedOrder,
-  pieChartOrders
+  pieChartOrders,
+  wipOrder,
+  plannedOrder
 } from '../../actions/staffAction';
 import { baseUrl } from './../../baseUrl';
 import { connect } from 'react-redux';
@@ -39,9 +41,7 @@ class Emp extends Component {
           Header: 'Quantity',
           accessor: 'count',
           width: 150,
-          Cell: (row) => {
-            return row?.value;
-          }
+          Cell: (row) => row?.value
         },
         {
           Header: 'Assigned By',
@@ -68,9 +68,7 @@ class Emp extends Component {
           Header: 'Product',
           accessor: 'product',
           width: 150,
-          Cell: (row) => {
-            return <div>row?.value</div>;
-          }
+          Cell: (row) => row?.value
         },
         {
           Header: 'Price',
@@ -210,7 +208,6 @@ class Emp extends Component {
         });
       });
   };
-
   getMyOrders = () => {
     this.setState({
       isLoading: true
@@ -325,6 +322,8 @@ class Emp extends Component {
     this.getMe();
     this.getMyOrders();
     this.props.pieChartOrders();
+    this.props.plannedOrder();
+    this.props.wipOrder();
   }
   render() {
     return (
@@ -385,9 +384,9 @@ class Emp extends Component {
                   <div className="bg-primary d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        2055
+                        {this.props.wipOrderCount}
                       </span>
-                      <span className="text-white">articles</span>
+                      <span className="text-white">Planned Order</span>
                     </div>
                     <div>
                       <i className="fa fa-pencil-alt fa-2x text-white"></i>
@@ -398,9 +397,9 @@ class Emp extends Component {
                   <div className="bg-warning d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        5220
+                        {this.props.plannedOrderCount}
                       </span>
-                      <span className="text-white">Gallery images</span>
+                      <span className="text-white">WIP Order</span>
                     </div>
                     <div>
                       <i className="fa fa-image fa-2x text-white"></i>
@@ -560,11 +559,15 @@ class Emp extends Component {
 const mapStateToProps = (state) => ({
   user: state.app.user,
   order: state.app.processedOrder,
+  wipOrderCount: state.app.wipOrder,
+  plannedOrderCount: state.app.plannedOrder,
   empPieChart: state.app.empPieChart
 });
 export default connect(mapStateToProps, {
   OnlyLoadUser,
   updateOrderAcceptOrReject,
   processedOrder,
-  pieChartOrders
+  pieChartOrders,
+  wipOrder,
+  plannedOrder
 })(Emp);

@@ -18,7 +18,7 @@ exports.addNewRawMaterial = async (req, res, next) => {
       message: "Raw Meterial Added Succsfull",
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -28,14 +28,12 @@ exports.addNewRawMaterial = async (req, res, next) => {
 
 exports.getAllRawMaterials = async (req, res, next) => {
   try {
-    const rawMaterials = await RawMaterial.find({}).populate({
-      path: "machine",
-    });
+    const rawMaterials = await RawMaterial.find({}).populate("Machine", "name");
     res.status(200).json({
       data: rawMaterials,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -56,7 +54,7 @@ exports.getMachineWise = async (req, res, next) => {
       data: rawMaterials,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -75,7 +73,7 @@ exports.getSingle = async (req, res, next) => {
       data: rawMaterial,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -99,7 +97,7 @@ exports.updateRawMaterial = async (req, res, next) => {
       message: "Raw Material Updated Successfully",
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -119,7 +117,7 @@ exports.deleteRawMaterial = async (req, res, next) => {
       message: "Raw Material Deleted Successfully",
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -142,6 +140,6 @@ exports.putInStock = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

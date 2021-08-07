@@ -1,90 +1,95 @@
-import React from 'react'
-import Nav from '../Header/Header'
-import { Container, Row, Col, ListGroup, Table } from 'react-bootstrap'
-import './Reports.css'
-import Chart from '../../components/Dashboard/Chart3'
-const Reports = () => {
-    return (
-        <div>
-            <Nav></Nav>
-            <Container fluid>
-                <h1 className='p-4 text-center'>Machine Targets</h1>
-                <Row className='mt-3'>
-                    <Col md={{ span: 6, offset: 1 }} sm={12}>
-                        <ListGroup>
-                            <ListGroup.Item className='machine'>
-                                <div> Machine</div>
-                                <div>Target</div>
-                                <div>Statics</div>
-                            </ListGroup.Item>
-                            <ListGroup.Item className='machine-item'>
-                                <div><span className='bg-orange machine-no '>1</span> Boring</div>
-                                <div>1100 Barrel</div>
-                                <div><i className='fa fa-signal fa-2x text-orange'></i></div>
-                            </ListGroup.Item>
-                            <ListGroup.Item className='machine-item'>
-                                <div><span className='bg-orange machine-no'>1</span> Drilling</div>
-                                <div>1100 Barrel</div>
-                                <div><i className='fa fa-signal fa-2x text-orange'></i></div>
-                            </ListGroup.Item>
-                            <ListGroup.Item className='machine-item'>
-                                <div><span className='bg-orange machine-no'>1</span> Milling</div>
-                                <div>1100 Barrel</div>
-                                <div><i className='fa fa-signal fa-2x text-orange'></i></div>
-                            </ListGroup.Item>
-                            <ListGroup.Item className='machine-item'>
-                                <div><span className='bg-orange machine-no'>1</span> Mining</div>
-                                <div>1100 Barrel</div>
-                                <div><i className='fa fa-signal fa-2x text-orange'></i></div>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Col>
-                    <Col md={{ span: 3, offset: 1 }} className='chart' sm={12}>
-                        <Chart></Chart>
-                    </Col>
-                </Row>
-                <h1 className='p-4 text-center'>Production</h1>
-                <Row>
-                    <Col md={{ span: 8, offset: 2 }} className='mt-5'>
-                        <Table striped bordered hover size="md">
-                            <thead>
-                                <tr className='bg-sky text-white'>
-                                    <th>Sr #</th>
-                                    <th>Machine</th>
-                                    <th>Target</th>
-                                    <th>Achieved</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Boring</td>
-                                    <td>1100</td>
-                                    <td>950</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Drilling</td>
-                                    <td>1200</td>
-                                    <td>1300</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Mining</td>
-                                    <td>550</td>
-                                    <td>400</td>
-                                </tr>
-                                <tr key="">
-                                    <td colSpan='3' className='text-orange font-weight-bold'>Total Production</td>
-                                    <td>2650</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Col>
-                </Row>
-            </Container>
-        </div >
-    )
-}
+import React, { Fragment, useEffect, useState } from 'react';
+import Nav from '../Header/Header';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import Axios from 'axios';
+import { baseUrl } from './../../baseUrl';
+import EditIcon from '@material-ui/icons/Edit';
+import { Link } from 'react-router-dom';
+import { Bar } from 'react-chartjs-2';
+const colors = {
+    1: 'orange',
+    2: 'red',
+    3: 'yellow',
+    4: 'green',
+    5: 'purpole',
+    6: 'red',
+    7: 'red',
+    8: 'grey',
+    0: 'grey'
+  };
 
-export default Reports
+const Reports = () => {
+  const [machines, setMachines] = useState([]);
+  const [chartData, setChartData] = useState({});
+  const [isLoadingMachines, setLoadingMachines] = useState(true);
+  const data = {
+    labels: [],
+    datasets: [
+        {
+        label: 'Machines Target Graph',
+        data: [],
+        backgroundColor: [],
+        },
+    ],
+  };
+    const options = {
+  scales: {
+    yAxes: [
+      {
+        ticks: {
+          beginAtZero: true,
+        },
+      },
+    ],
+  },
+};
+  
+const getAllMachines = async () => {
+    try {
+      const response = await Axios.get(
+        baseUrl + '/machines/getAllMachinesWithAnyStatus',
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+          }
+        }
+      );
+
+      console.log('Machines');
+      console.log(response.data);
+
+      setLoadingMachines(false);
+        setMachines(response.data);
+        console.log("machines targets")
+        console.log(response.data)
+        response.data.forEach(machine => {
+            data.labels.push(machine.name);
+            data.datasets[0].data.push(machine.target);
+            data.datasets[0].backgroundColor.push(`${colors[machine.status]}`);
+        });
+        console.log("machines charts data")
+        console.log(data)
+        setChartData(data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(async () => {
+    if (isLoadingMachines) {
+        getAllMachines();
+    }
+  }, []);
+
+  return (
+    <Fragment>
+      <Nav></Nav>
+      <Container></Container>
+      <div style={{ margin: 50 }}>
+        <h3>Machines Target Graph</h3>
+       <Bar data={chartData} options={options} />
+      </div>
+    </Fragment>
+  );
+};
+
+export default Reports;

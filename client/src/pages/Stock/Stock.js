@@ -1,5 +1,5 @@
-import React from "react";
-import Nav from "../Header/Header";
+import React from 'react';
+import Nav from '../Header/Header';
 import {
   Container,
   Row,
@@ -7,16 +7,16 @@ import {
   ListGroup,
   Modal,
   Button,
-  Form,
-} from "react-bootstrap";
-import moment from "moment";
-import "../reports/Reports.css";
-import { AgGridReact } from "ag-grid-react";
-import { Component } from "react";
-import Axios from "axios";
-import { baseUrl } from "./../../baseUrl";
+  Form
+} from 'react-bootstrap';
+import moment from 'moment';
+import '../reports/Reports.css';
+import { AgGridReact } from 'ag-grid-react';
+import { Component } from 'react';
+import Axios from 'axios';
+import { baseUrl } from './../../baseUrl';
 function actionCellRenderer(params) {
-  let eGui = document.createElement("div");
+  let eGui = document.createElement('div');
 
   eGui.innerHTML = `
 <Button variant="primary" data-action="Accept" > Accept </Button>
@@ -26,7 +26,7 @@ function actionCellRenderer(params) {
 }
 
 function reejectButtonRendrer(params) {
-  let eGui = document.createElement("div");
+  let eGui = document.createElement('div');
 
   eGui.innerHTML = `
 <Button variant="primary" data-action="Accept" > Reject </Button>
@@ -44,100 +44,100 @@ class Stock extends Component {
       totalProduced: -1,
       rawMaterialColumns: [
         {
-          headerName: "Id",
-          field: "id",
+          headerName: 'Id',
+          field: 'id',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Raw Material Count",
-          field: "count",
+          headerName: 'Raw Material Count',
+          field: 'count',
           sortable: true,
-          filter: true,
-        },
-
-        {
-          headerName: "Machine",
-          field: "machine",
-          sortable: true,
-          filter: true,
+          filter: true
         },
 
         {
-          headerName: "Raw Material Type",
-          field: "type",
+          headerName: 'Machine',
+          field: 'machine',
           sortable: true,
-          filter: true,
+          filter: true
         },
-        { headerName: "Date", field: "date", sortable: true, filter: true },
+
         {
-          headerName: "Action",
+          headerName: 'Raw Material Type',
+          field: 'type',
+          sortable: true,
+          filter: true
+        },
+        { headerName: 'Date', field: 'date', sortable: true, filter: true },
+        {
+          headerName: 'Action',
           minWidth: 150,
           cellRenderer: actionCellRenderer,
           editable: false,
-          colId: "action",
-        },
+          colId: 'action'
+        }
       ],
       stocksColumns: [
         {
-          headerName: "Raw Material Count",
-          field: "count",
+          headerName: 'Raw Material Count',
+          field: 'count',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Machine",
-          field: "machine",
+          headerName: 'Machine',
+          field: 'machine',
           sortable: true,
-          filter: true,
+          filter: true
         },
 
         {
-          headerName: "Raw Material Type",
-          field: "type",
+          headerName: 'Raw Material Type',
+          field: 'type',
           sortable: true,
-          filter: true,
+          filter: true
         },
-        { headerName: "Date", field: "date", sortable: true, filter: true },
+        { headerName: 'Date', field: 'date', sortable: true, filter: true }
       ],
       totalProductsProducingColumns: [
         {
-          headerName: "Id",
-          field: "id",
+          headerName: 'Id',
+          field: 'id',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Product Count",
-          field: "count",
+          headerName: 'Product Count',
+          field: 'count',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Machine",
-          field: "machine",
+          headerName: 'Machine',
+          field: 'machine',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Product",
-          field: "product",
+          headerName: 'Product',
+          field: 'product',
           sortable: true,
-          filter: true,
+          filter: true
         },
 
-        { headerName: "Date", field: "date", sortable: true, filter: true },
+        { headerName: 'Date', field: 'date', sortable: true, filter: true },
         {
-          headerName: "Action",
+          headerName: 'Action',
           minWidth: 150,
           cellRenderer: reejectButtonRendrer,
           editable: false,
-          colId: "action",
-        },
+          colId: 'action'
+        }
       ],
       rawMaterials: [],
       totalProductsProduced: [],
-      stocks: [],
+      stocks: []
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleRejectProducts = this.handleRejectProducts.bind(this);
@@ -146,25 +146,25 @@ class Stock extends Component {
     e.preventDefault();
     const { totalProduced, rejectId, productToReject } = this.state;
     if (totalProduced < productToReject) {
-      alert("Rejection Quantity Exceeed");
+      alert('Rejection Quantity Exceeed');
       return;
     }
     const dataToSend = {
       id: rejectId,
-      count: productToReject,
+      count: productToReject
     };
 
-    Axios.post(baseUrl + "/products/rejectProductsCount", dataToSend, {
+    Axios.post(baseUrl + '/products/rejectProductsCount', dataToSend, {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
     })
       .then((response) => {
         this.setState({
           show: false,
           productToReject: 0,
           totalProduced: -1,
-          rejectId: null,
+          rejectId: null
         });
         this.getConfirmedProducts();
       })
@@ -174,17 +174,17 @@ class Stock extends Component {
   };
   handleClose = (e) => {
     this.setState({
-      show: false,
+      show: false
     });
   };
   updateToStock = (id) => {
     const dataToSend = {
-      id: id,
+      id: id
     };
-    Axios.post(baseUrl + "/rawMaterials/putInStock", dataToSend, {
+    Axios.post(baseUrl + '/rawMaterials/putInStock', dataToSend, {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
     })
       .then((response) => {
         this.getRawMaterials();
@@ -194,9 +194,9 @@ class Stock extends Component {
       });
   };
   onCellClicked = (e) => {
-    console.log("clicked", e, e.data);
+    console.log('clicked', e, e.data);
     const id = e.data.id;
-    if (e.colDef.headerName == "Action") {
+    if (e.colDef.headerName == 'Action') {
       if (!id) {
         return;
       }
@@ -205,27 +205,27 @@ class Stock extends Component {
     }
   };
   onCellClickedReject = (e) => {
-    console.log("clicked", e.data);
+    console.log('clicked', e.data);
     const id = e.data.id;
     console.log(id);
-    if (e.colDef.headerName == "Action") {
+    if (e.colDef.headerName == 'Action') {
       if (!id) {
         return;
       }
       this.setState({
         rejectId: id,
         show: true,
-        totalProduced: e.data.count,
+        totalProduced: e.data.count
       });
     } else {
     }
   };
 
   getConfirmedProducts = () => {
-    Axios.get(baseUrl + "/products/getProductsProduced", {
+    Axios.get(baseUrl + '/products/getProductsProduced', {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
     })
       .then((response) => {
         const data = response.data.data;
@@ -236,11 +236,11 @@ class Stock extends Component {
             count: product.count,
             machine: product.machine.name,
             product: product.product.name,
-            date: moment().format("llll", product.date),
+            date: moment().format('llll', product.date)
           });
         });
         this.setState({
-          totalProductsProduced: totalProductsProduced,
+          totalProductsProduced: totalProductsProduced
         });
       })
       .catch((error) => {
@@ -248,14 +248,14 @@ class Stock extends Component {
       });
   };
   getRawMaterials = () => {
-    Axios.get(baseUrl + "/rawMaterials/getAllRawMaterials", {
+    Axios.get(baseUrl + '/rawMaterials/getAllRawMaterials', {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
     })
       .then((response) => {
         const data = response.data.data;
-        console.log("data", data);
+        console.log('data', data);
         let rawMaterials = [];
         let stocks = [];
         data.forEach((material) => {
@@ -264,7 +264,7 @@ class Stock extends Component {
               count: material.count,
               machine: material.machine.name,
               type: material.type,
-              date: moment().format("llll", material.date),
+              date: moment().format('llll', material.date)
             });
           } else {
             rawMaterials.push({
@@ -272,13 +272,13 @@ class Stock extends Component {
               count: material.count,
               machine: material.machine.name,
               type: material.type,
-              date: moment().format("llll", material.date),
+              date: moment().format('llll', material.date)
             });
           }
         });
         this.setState({
           rawMaterials: rawMaterials,
-          stocks: stocks,
+          stocks: stocks
         });
       })
       .catch((error) => {
@@ -295,13 +295,12 @@ class Stock extends Component {
       <div>
         <Nav></Nav>
         <Container fluid>
-          <h1 className='p-3 text-center text-danger'>Product At Low Amount</h1>
+          <h1 className="p-3 text-center text-danger">Product At Low Amount</h1>
           <Row>
-            <Col md={{ span: 10, offset: 1 }} className='mt-3'>
+            <Col md={{ span: 10, offset: 1 }} className="mt-3">
               <div
-                className='ag-theme-alpine'
-                style={{ height: 400, width: 600 }}
-              >
+                className="ag-theme-alpine"
+                style={{ height: 400, width: 600 }}>
                 <AgGridReact
                   rowData={this.state.rawMaterials}
                   columnDefs={this.state.rawMaterialColumns}
@@ -312,12 +311,11 @@ class Stock extends Component {
           </Row>
           <Row>
             <Col md={{ span: 5, offset: 1 }} sm={12}>
-              <h1 className='p-3 text-center'>In Stock</h1>
+              <h1 className="p-3 text-center">In Stock</h1>
               <ListGroup>
                 <div
-                  className='ag-theme-alpine'
-                  style={{ height: 400, width: 600 }}
-                >
+                  className="ag-theme-alpine"
+                  style={{ height: 400, width: 600 }}>
                   <AgGridReact
                     rowData={this.state.stocks}
                     columnDefs={this.state.stocksColumns}
@@ -326,12 +324,11 @@ class Stock extends Component {
               </ListGroup>
             </Col>
             <Col md={{ span: 5 }} sm={12}>
-              <h1 className='p-3 text-center'>Production Done</h1>
+              <h1 className="p-3 text-center">Production Done</h1>
               <ListGroup>
                 <div
-                  className='ag-theme-alpine'
-                  style={{ height: 400, width: 600 }}
-                >
+                  className="ag-theme-alpine"
+                  style={{ height: 400, width: 600 }}>
                   <AgGridReact
                     rowData={this.state.totalProductsProduced}
                     columnDefs={this.state.totalProductsProducingColumns}
@@ -353,12 +350,12 @@ class Stock extends Component {
             <Form>
               <Form.Group>
                 <Form.Control
-                  type='text'
-                  placeholder='Quantity'
+                  type="text"
+                  placeholder="Quantity"
                   value={this.state.productToReject}
                   onChange={(e) => {
                     this.setState({
-                      productToReject: e.target.value,
+                      productToReject: e.target.value
                     });
                   }}
                 />
@@ -366,10 +363,10 @@ class Stock extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={this.handleClose}>
+            <Button variant="secondary" onClick={this.handleClose}>
               Close
             </Button>
-            <Button variant='primary' onClick={this.handleRejectProducts}>
+            <Button variant="primary" onClick={this.handleRejectProducts}>
               Save Changes
             </Button>
           </Modal.Footer>

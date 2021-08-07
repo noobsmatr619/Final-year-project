@@ -1,12 +1,10 @@
-const JsBarcode = require("jsbarcode");
+const JsBarcode = require('jsbarcode');
 // const { createCanvas } = require("canvas");
-const { DOMImplementation, XMLSerializer } = require("xmldom");
-const mongoose = require("mongoose");
-const Product = require("../Models/Product");
-const { multerUploads, dataUri } = require("../upload");
-
-const ProductMachine = require("../Models/ProductMachine");
-const { sendServerError } = require("./../utils/errors/serverError");
+const { DOMImplementation, XMLSerializer } = require('xmldom');
+const mongoose = require('mongoose');
+const Product = require('../Models/Product');
+const ProductMachine = require('../Models/ProductMachine');
+const { sendServerError } = require('./../utils/errors/serverError');
 
 // Canvas v1
 // const Canvas = require("canvas");
@@ -23,7 +21,7 @@ const { sendServerError } = require("./../utils/errors/serverError");
 exports.createBarCode = async (req, res, next) => {
   try {
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -40,61 +38,62 @@ exports.createProduct = async (req, res, next) => {
     rawMaterialsId,
     operatorNo,
     duration,
-    machineId,
+    machineId
   } = req.body;
-  if (req.file) {
-    const file = dataUri(req).content;
-    return uploader
-      .upload(file)
-      .then(async result => {
-        try {
-          console.log(result);
-          const id = new mongoose.Types.ObjectId();
-          const image = result.url;
-          const xmlSerializer = new XMLSerializer();
-          const document = new DOMImplementation().createDocument(
-            "http://www.w3.org/1999/xhtml",
-            "html",
-            null
-          );
-          const svgNode = document.createElementNS(
-            "http://www.w3.org/2000/svg",
-            "svg"
-          );
-          JsBarcode(svgNode, id, {
-            xmlDocument: document,
-          });
-          const barcode = xmlSerializer.serializeToString(svgNode);
-          const product = await Product.create({
-            _id: id,
-            barcode: barcode,
-            name,
-            description,
-            category,
-            duration,
-            operatorNo,
-            rawMaterials: rawMaterialsId,
-            price,
-            image,
-            machine: machineId,
-          });
-          const savedProduct = await product.save();
-          return (
-            res,
-            status(200).json({
-              data: savedProduct,
-              message: "Product Added Succsfull",
-            })
-          );
-        } catch (error) {
-          return sendServerError(res, 500, "Server Error");
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        return sendServerError(res, 500, "Server Error");
-      });
+  console.log(req.body);
+  console.log('run');
+  // if (req.file) {
+  //   const file = dataUri(req).content;
+  //   console.log(file);
+  //   return uploader
+  //     .upload(file)
+  //     .then(async (result) => {
+  try {
+    const id = new mongoose.Types.ObjectId();
+    // const xmlSerializer = new XMLSerializer();
+    // const document = new DOMImplementation().createDocument(
+    //   'http://www.w3.org/1999/xhtml',
+    //   'html',
+    //   null
+    // );
+    // const svgNode = document.createElementNS(
+    //   'http://www.w3.org/2000/svg',
+    //   'svg'
+    // );
+    // JsBarcode(svgNode, id, {
+    //   xmlDocument: document
+    // });
+    // const barcode = xmlSerializer.serializeToString(svgNode);
+    const product = await Product.create({
+      _id: id,
+      // barcode: barcode,
+      name,
+      description,
+      category,
+      duration,
+      operatorNo,
+      rawMaterials: rawMaterialsId,
+      price,
+      machine: machineId
+    });
+    const savedProduct = await product.save();
+
+    return res.status(200).json({
+      data: savedProduct,
+      message: 'Product Added Succsfull'
+    });
+  } catch (error) {
+    console.log(error);
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       return sendServerError(res, 500, "Please check all the information is filled");
+  //     });
+  // } else {
+  //   return sendServerError(res, 400, 'File not found');
+  // }
 };
 
 //@desc Get All Products
@@ -105,10 +104,10 @@ exports.getAllProducts = async (req, res, next) => {
   try {
     const products = await Product.find({});
     return res.status(200).json({
-      data: products,
+      data: products
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -121,14 +120,14 @@ exports.getSingleProduct = async (req, res, next) => {
   try {
     const product = await Product.findById(id);
     if (!product) {
-      return sendServerError(res, 404, "No Product Foundd");
+      return sendServerError(res, 404, 'No Product Foundd');
     }
 
     return res.status(200).json({
-      data: product,
+      data: product
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -149,14 +148,14 @@ exports.updateSingleProduct = async (req, res, next) => {
       category,
       count,
       price,
-      image,
+      image
     });
 
     return res.status(200).json({
-      message: "Product Details Updated Succesfully",
+      message: 'Product Details Updated Succesfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -170,10 +169,10 @@ exports.deleteSingleProduct = async (req, res, next) => {
     await Product.findByIdAndDelete(id);
 
     return res.status(200).json({
-      message: "Product Deleted Succesfully",
+      message: 'Product Deleted Succesfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -187,14 +186,14 @@ exports.addProductByMachine = async (req, res, next) => {
     const productPerMachine = await ProductMachine.create({
       product,
       machine,
-      count,
+      count
     });
     return res.status(200).json({
-      message: "Added Succesfully",
+      message: 'Added Succesfully'
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -206,20 +205,20 @@ exports.getProductsProduced = async (req, res, next) => {
   try {
     const products = await ProductMachine.find({})
       .populate({
-        path: "machine",
-        select: "id name",
+        path: 'machine',
+        select: 'id name'
       })
       .populate({
-        path: "product",
-        select: "id name",
+        path: 'product',
+        select: 'id name'
       });
     return res.status(200).json({
       success: true,
-      data: products,
+      data: products
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -233,14 +232,14 @@ exports.rejectProductsCount = async (req, res, next) => {
     const product = await ProductMachine.findById(id);
     const countToUpdate = product.count - count;
     await ProductMachine.findByIdAndUpdate(id, {
-      count: countToUpdate,
+      count: countToUpdate
     });
     return res.status(200).json({
       success: true,
-      message: "Rejected Successfully",
+      message: 'Rejected Successfully'
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

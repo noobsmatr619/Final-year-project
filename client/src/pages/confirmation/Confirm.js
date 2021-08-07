@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import Nav from "../Header/Header";
-import moment from "moment";
-import Axios from "axios";
-import { baseUrl } from "./../../baseUrl";
+import React, { Component } from 'react';
+import Nav from '../Header/Header';
+import moment from 'moment';
+import Axios from 'axios';
+import { baseUrl } from './../../baseUrl';
 import {
   Container,
   Row,
@@ -11,9 +11,9 @@ import {
   Table,
   InputGroup,
   FormCheck,
-  ProgressBar,
-} from "react-bootstrap";
-import { AgGridReact } from "ag-grid-react";
+  ProgressBar
+} from 'react-bootstrap';
+import { AgGridReact } from 'ag-grid-react';
 
 class Confirm extends Component {
   constructor(props) {
@@ -21,58 +21,58 @@ class Confirm extends Component {
     this.state = {
       rawMaterialColumns: [
         {
-          headerName: "Raw Material Count",
-          field: "count",
+          headerName: 'Raw Material Count',
+          field: 'count',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Machine",
-          field: "machine",
+          headerName: 'Machine',
+          field: 'machine',
           sortable: true,
-          filter: true,
+          filter: true
         },
 
         {
-          headerName: "Raw Material Type",
-          field: "type",
+          headerName: 'Raw Material Type',
+          field: 'type',
           sortable: true,
-          filter: true,
+          filter: true
         },
-        { headerName: "Date", field: "date", sortable: true, filter: true },
+        { headerName: 'Date', field: 'date', sortable: true, filter: true }
       ],
       totalProductsProducingColumns: [
         {
-          headerName: "Product Count",
-          field: "count",
+          headerName: 'Product Count',
+          field: 'count',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Machine",
-          field: "machine",
+          headerName: 'Machine',
+          field: 'machine',
           sortable: true,
-          filter: true,
+          filter: true
         },
         {
-          headerName: "Product",
-          field: "product",
+          headerName: 'Product',
+          field: 'product',
           sortable: true,
-          filter: true,
+          filter: true
         },
 
-        { headerName: "Date", field: "date", sortable: true, filter: true },
+        { headerName: 'Date', field: 'date', sortable: true, filter: true }
       ],
       rawMaterials: [],
-      totalProductsProduced: [],
+      totalProductsProduced: []
     };
   }
 
   getConfirmedProducts = () => {
-    Axios.get(baseUrl + "/products/getProductsProduced", {
+    Axios.get(baseUrl + '/products/getProductsProduced', {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
     })
       .then((response) => {
         const data = response.data.data;
@@ -82,11 +82,11 @@ class Confirm extends Component {
             count: product.count,
             machine: product.machine.name,
             product: product.product.name,
-            date: moment().format("llll", product.date),
+            date: moment().format('llll', product.date)
           });
         });
         this.setState({
-          totalProductsProduced: totalProductsProduced,
+          totalProductsProduced: totalProductsProduced
         });
       })
       .catch((error) => {
@@ -94,10 +94,10 @@ class Confirm extends Component {
       });
   };
   getRawMaterials = () => {
-    Axios.get(baseUrl + "/rawMaterials/getAllRawMaterials", {
+    Axios.get(baseUrl + '/rawMaterials/getAllRawMaterials', {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
     })
       .then((response) => {
         const data = response.data.data;
@@ -107,11 +107,11 @@ class Confirm extends Component {
             count: material.count,
             machine: material.machine.name,
             type: material.type,
-            date: moment().format("llll", material.date),
+            date: moment().format('llll', material.date)
           });
         });
         this.setState({
-          rawMaterials: rawMaterials,
+          rawMaterials: rawMaterials
         });
       })
       .catch((error) => {
@@ -127,20 +127,16 @@ class Confirm extends Component {
       <div>
         <Nav></Nav>
         <Container>
-          <h1 className='mt-3'>Confirmation</h1>
-          <Row className='mt-3'>
+          <h1 className="mt-3">Confirmation</h1>
+          <Row className="mt-3">
             <Col md={12} sm={12}>
-              <ListGroup variant='flush'>
-                <ListGroup.Item
-                  className='active font-weight-bold'
-
-                >
+              <ListGroup variant="flush">
+                <ListGroup.Item className="active font-weight-bold">
                   Confirmed products
                 </ListGroup.Item>
                 <div
-                  className='ag-theme-alpine'
-                  style={{ height: 400, width: 1110 }}
-                >
+                  className="ag-theme-alpine"
+                  style={{ height: 400, width: 1110 }}>
                   <AgGridReact
                     rowData={this.state.totalProductsProduced}
                     columnDefs={this.state.totalProductsProducingColumns}
@@ -148,21 +144,18 @@ class Confirm extends Component {
                 </div>
               </ListGroup>
             </Col>
-
           </Row>
           <Row>
             <Col md={8} sm={12}>
-              <ListGroup className='mt-5' variant='flush'>
+              <ListGroup className="mt-5" variant="flush">
                 <ListGroup.Item
-                  className='active font-weight-bold '
-                  style={{ width: 1110 }}
-                >
+                  className="active font-weight-bold "
+                  style={{ width: 1110 }}>
                   Stock list
                 </ListGroup.Item>
                 <div
-                  className='ag-theme-alpine'
-                  style={{ height: 400, width: 1110 }}
-                >
+                  className="ag-theme-alpine"
+                  style={{ height: 400, width: 1110 }}>
                   <AgGridReact
                     rowData={this.state.rawMaterials}
                     columnDefs={this.state.rawMaterialColumns}

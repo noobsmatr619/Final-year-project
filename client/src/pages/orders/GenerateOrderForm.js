@@ -3,6 +3,7 @@ import Nav from '../Header/Header';
 import axios from 'axios';
 import { baseUrl } from './../../baseUrl';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import Swal from 'sweetalert';
 
 class GenerateOrderForm extends Component {
   constructor(props) {
@@ -82,6 +83,7 @@ class GenerateOrderForm extends Component {
         this.setState({
           isLoading: false
         });
+        Swal('Order is Assigned');
       })
       .catch((error) => {
         this.setState({
@@ -163,6 +165,7 @@ class GenerateOrderForm extends Component {
           <Form.Group>
             <Form.Control
               type="text"
+              data-testid="buyerName"
               placeholder="Buyer Name"
               value={this.state.provider}
               onChange={(e) => {

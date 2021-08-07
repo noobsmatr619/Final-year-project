@@ -1,34 +1,28 @@
-const jwt = require("jsonwebtoken");
-const { sendServerError } = require("./../utils/errors/serverError");
-require("dotenv").config();
-const User = require("../Models/User");
+const jwt = require('jsonwebtoken');
+const { sendServerError } = require('./../utils/errors/serverError');
+require('dotenv').config();
+const User = require('../Models/User');
 exports.protect = async (req, res, next) => {
   let token;
-  console.log(req.headers.authorization);
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization.startsWith('Bearer')
   ) {
-    token = req.headers.authorization.split(" ")[1];
+    token = req.headers.authorization.split(' ')[1];
   }
-  console.log(token);
   //Make Sure Token exists
   if (!token) {
-    return sendServerError(res, 401, "Not Authorized to Access this route");
+    return sendServerError(res, 401, 'Not Authorized to Access this route');
   }
   //verifying token
   try {
-    console.log("object");
-    console.log(token);
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-    console.log("object");
 
-    console.log(decoded);
     req.user = await User.findById(decoded.id);
     next();
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 401, "Not Authorized to Access this route");
+    return sendServerError(res, 401, 'Not Authorized to Access this route');
   }
 };
 

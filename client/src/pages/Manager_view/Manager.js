@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { getStaff, getEmployeeAndStaff } from '../../actions/staffAction';
+import {
+  getStaff,
+  getEmployeeAndStaff,
+  processedOrder,
+  updatePaymentStatus,
+  pieChartOrders
+} from '../../actions/staffAction';
 import { getUser } from '../../actions/userActions';
 import { getAllTeams } from '../../actions/teamsActions';
 import { getAllProject } from '../../actions/projectActions';
@@ -22,21 +28,28 @@ const Manager = ({
   getUser,
   employees,
   getEmployeeAndStaff,
+  processedOrder,
   getAllTeams,
   teams,
   getAllProject,
   projects,
   getStaff,
   employeeAndStaff,
-  staff
+  staff,
+  dailySales,
+  pieChartOrders,
+  empPieChart,
+  updatePaymentStatus
 }) => {
   useEffect(() => {
     const runActions = async () => {
       setLoading(false);
       await getUser();
+      await pieChartOrders();
       await getEmployeeAndStaff();
       await getAllTeams();
       await getAllProject();
+      await processedOrder();
       await getStaff();
       setLoading(true);
     };
@@ -106,7 +119,7 @@ const Manager = ({
                   <div className="bg-danger d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        206
+                        {dailySales}
                       </span>
                       <span className="text-white">Daily sales</span>
                     </div>
@@ -159,7 +172,7 @@ const Manager = ({
               </Row>
               <div className="d-flex justify-content-center  bg-light mt-5">
                 expanses
-                <MyChart></MyChart>
+                <MyChart empPieChart={empPieChart}></MyChart>
               </div>
             </Col>
             <Col md={3} sm={12}>
@@ -168,7 +181,7 @@ const Manager = ({
                   style={{
                     justifyContent: 'space-between'
                   }}
-                  as="li"
+                  as="li" 
                   active
                   className="d-flex">
                   <Button disabled={true}>Project</Button>
@@ -257,6 +270,7 @@ const Manager = ({
                     <th>Role</th>
 
                     <th>Paid</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -268,6 +282,16 @@ const Manager = ({
                         <td>{e.displayName}</td>
                         <td>{e.type}</td>
                         <td>{e.isPaid ? 'PAID' : 'NOT PAID'}</td>
+                        <td>
+                          <Button
+                            disabled={e.isPaid}
+                            color="primary"
+                            onClick={async () => {
+                              await updatePaymentStatus(e._id);
+                            }}>
+                            Click to Pay
+                          </Button>{' '}
+                        </td>
                       </tr>
                     ))}
                 </tbody>
@@ -296,6 +320,8 @@ const mapStateToProps = (state) => ({
   teams: state.app.teams,
   projects: state.app.projects,
   staff: state.app.staff,
+  dailySales: state.app.processedOrder,
+  empPieChart: state.app.empPieChart,
   employeeAndStaff: state.app.employeeAndStaff
 });
 export default connect(mapStateToProps, {
@@ -303,5 +329,8 @@ export default connect(mapStateToProps, {
   getAllTeams,
   getAllProject,
   getEmployeeAndStaff,
-  getStaff
+  getStaff,
+  pieChartOrders,
+  processedOrder,
+  updatePaymentStatus
 })(Manager);

@@ -18,7 +18,7 @@ exports.createTask = async (req, res, next) => {
       message: "Task Added Succsfull",
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -35,7 +35,7 @@ exports.getAllTasks = async (req, res, next) => {
       data: tasks,
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
 
@@ -64,6 +64,6 @@ exports.markCompleted = async (req, res, next) => {
       message: "Task Completed Successfully",
     });
   } catch (error) {
-    return sendServerError(res, 500, "Server Error");
+    return sendServerError(res, 500, "Please check all the information is filled");
   }
 };

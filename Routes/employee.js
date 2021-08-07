@@ -15,7 +15,7 @@ router.get("/", auth, async (req, res) => {
         res.json(user);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ msg: "Server Error" });
+        return res.status(500).json({ msg: "Please check all the information is filled" });
     }
 });
 // Route employee route
@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
         );
     } catch (error) {
         console.error(error);
-        return res.status(500).send("Server error");
+        return res.status(500).send("Please check all the information is filled");
     }
 });
 router.post("/addemployee", async (req, res) => {
@@ -83,7 +83,7 @@ router.post("/addemployee", async (req, res) => {
         res.json({});
     } catch (error) {
         console.error(error);
-        return res.status(500).send("Server error");
+        return res.status(500).send("Please check all the information is filled");
     }
 });
 router.get("/", auth, verify.isemployee, async (req, res) => {
@@ -92,7 +92,7 @@ router.get("/", auth, verify.isemployee, async (req, res) => {
         res.json(user);
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ msg: "Server Error" });
+        return res.status(500).json({ msg: "Please check all the information is filled" });
     }
 });
 

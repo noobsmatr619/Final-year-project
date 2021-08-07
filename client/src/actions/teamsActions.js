@@ -1,14 +1,14 @@
-import { baseUrl } from "../baseUrl";
-import _ from "lodash";
-import { get, post, put, deleteApi } from "../api";
+import { baseUrl } from '../baseUrl';
+import _ from 'lodash';
+import { get, post, put, deleteApi } from '../api';
 
-import axios from "axios";
-import * as Type from "./types";
+import axios from 'axios';
+import * as Type from './types';
 
-export const createTeam = (name, member) => async dispatch => {
+export const createTeam = (name, member) => async (dispatch) => {
   try {
     let members = [];
-    member.forEach(m => {
+    member.forEach((m) => {
       members.push({ memberId: m.id, memberName: m.displayName });
     });
 
@@ -17,8 +17,8 @@ export const createTeam = (name, member) => async dispatch => {
       { name: name, members: members },
       {
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+          Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+        }
       }
     );
     dispatch(getAllTeams());
@@ -29,31 +29,31 @@ export const createTeam = (name, member) => async dispatch => {
   }
 };
 
-export const getAllTeams = () => async dispatch => {
+export const getAllTeams = () => async (dispatch) => {
   try {
     const teams = await axios.get(`${baseUrl}/teams/getAllTeams`, {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
     });
     dispatch({
       type: Type.GET_ALL_TEAM,
-      payload: teams.data.data,
+      payload: teams.data.data
     });
   } catch (error) {
     debugger;
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('CRM_TOKEN');
     console.log(token);
     debugger;
     console.log(error);
   }
 };
-export const getMyTeams = () => async dispatch => {
+export const getMyTeams = () => async (dispatch) => {
   try {
-    const res = await get("/teams/getMyTeams");
+    const res = await get('/teams/getMyTeams');
     dispatch({
       type: Type.GET_MY_TEAMS,
-      payload: res.data,
+      payload: res.data
     });
   } catch (error) {
     console.log(error);

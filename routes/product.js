@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { uploader } = require("../config/cloudinaryConfiguration");
+const { uploader } = require('../config/cloudinaryConfiguration');
 
 const {
   createProduct,
@@ -8,13 +8,13 @@ const {
   addProductByMachine,
   getProductsProduced,
   rejectProductsCount,
-  createBarCode,
-} = require("./../controllers/product");
-router.post("/createProduct", createProduct);
-router.post("/addProductByMachine", addProductByMachine);
-router.post("/rejectProductsCount", rejectProductsCount);
+  createBarCode
+} = require('./../controllers/product');
+router.post('/createProduct', createProduct);
+router.post('/addProductByMachine', addProductByMachine);
+router.post('/rejectProductsCount', rejectProductsCount);
 
-router.get("/createBarCode", createBarCode);
-router.get("/getAllProducts", getAllProducts);
-router.get("/getProductsProduced", getProductsProduced);
+router.get('/createBarCode', createBarCode);
+router.get('/getAllProducts', getAllProducts);
+router.get('/getProductsProduced', getProductsProduced);
 module.exports = router;
