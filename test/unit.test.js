@@ -8,7 +8,7 @@ require('dotenv').config();
 
 // Mongo Models/Collections
 const testUser = require("../Models/User");
-const testChat = require("./../models/Chat"); //gives error
+const testChat = require("./../Models/Chat"); //gives error
 const testMachine = require("../Models/Machine");
 const testMessage = require("../Models/Message");
 const testOrder = require("../Models/Order");
