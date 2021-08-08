@@ -384,7 +384,7 @@ class Emp extends Component {
                   <div className="bg-primary d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        {this.props.wipOrderCount}
+                        {this.props.plannedOrderCount}
                       </span>
                       <span className="text-white">Planned Order</span>
                     </div>
@@ -397,7 +397,7 @@ class Emp extends Component {
                   <div className="bg-warning d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        {this.props.plannedOrderCount}
+                        {this.props.wipOrderCount}
                       </span>
                       <span className="text-white">WIP Order</span>
                     </div>

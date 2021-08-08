@@ -134,7 +134,7 @@ const Manager = ({
                       <span className="my-card-number font-weight-bold text-white">
                         1200
                       </span>
-                      <span className="text-white">Daily Expanse</span>
+                      <span className="text-white">Daily Expense</span>
                     </div>
                     <div>
                       <i className="fa fa-bookmark fa-2x text-white"></i>

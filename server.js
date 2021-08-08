@@ -57,26 +57,26 @@ app.use('/api/v1/projects', project);
 app.use('/api/v1/salaries', salaries);
 app.use('/api/v1/chats', chats);
 
-//socket.io code integration at server side
-// let interval;
-// const getApiAndEmit = async (socket) => {
-//   const machines = await Machines.find();
-//   // console.log(machines);
-//   // Emitting a new message. Will be consumed by the client
-//   socket.emit('machines', machines);
-// };
+// socket.io code integration at server side
+let interval;
+const getApiAndEmit = async (socket) => {
+  const machines = await Machines.find();
+  // console.log(machines);
+  // Emitting a new message. Will be consumed by the client
+  socket.emit('machines', machines);
+};
 
-// io.on('connection', (socket) => {
-//   console.log('connection made successfully');
-//   if (interval) {
-//     clearInterval(interval);
-//   }
-//   interval = setInterval(() => getApiAndEmit(socket), 1000);
-//   socket.on('disconnect', () => {
-//     console.log('Client disconnected');
-//     clearInterval(interval);
-//   });
-// });
+io.on('connection', (socket) => {
+  console.log('connection made successfully');
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  socket.on('disconnect', () => {
+    console.log('Client disconnected');
+    clearInterval(interval);
+  });
+});
 
 io.on('connect', (socket) => {
   socket.on('join', ({ name, profile }, callback) => {
