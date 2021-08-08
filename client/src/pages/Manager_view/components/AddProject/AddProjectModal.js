@@ -78,7 +78,7 @@ const AddProjectModal = props => {
                 id='exampleDate'
                 value={Project.dueDate}
                 onChange={e => {
-                  debugger;
+                  // debugger;
                   console.log(e.target.value);
                   setProject({
                     ...Project,

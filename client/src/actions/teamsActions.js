@@ -41,10 +41,10 @@ export const getAllTeams = () => async (dispatch) => {
       payload: teams.data.data
     });
   } catch (error) {
-    debugger;
+    // debugger;
     const token = localStorage.getItem('CRM_TOKEN');
-    console.log(token);
-    debugger;
+    // console.log(token);
+    // debugger;
     console.log(error);
   }
 };

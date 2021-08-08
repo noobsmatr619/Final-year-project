@@ -1,6 +1,7 @@
 const cloudinary = require('cloudinary').v2;
 const dotenv = require('dotenv');
-dotenv.config();
+
+if (process.env.NODE_ENV !== 'PRODUCTION') dotenv.config();
 
 const cloudinaryConfig = async () => {
   try {

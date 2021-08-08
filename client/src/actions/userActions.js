@@ -4,10 +4,10 @@ import * as Type from './types';
 
 export const getUser = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const token = localStorage.getItem('CRM_TOKEN');
-    console.log(token);
-    debugger;
+    // console.log(token);
+    // debugger;
 
     const employee = await axios.get(`${baseUrl}/auth/getAllEmployees`, {
       headers: {
@@ -20,10 +20,10 @@ export const getUser = () => async (dispatch) => {
       payload: employee.data.data
     });
   } catch (error) {
-    debugger;
+    // debugger;
     const token = localStorage.getItem('CRM_TOKEN');
-    console.log(token);
-    debugger;
+    // console.log(token);
+    // debugger;
     console.log(error);
   }
 };

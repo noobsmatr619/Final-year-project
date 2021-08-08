@@ -17,7 +17,7 @@ const io = require('socket.io')(server, {
 //users for sockets
 const { addUser, removeUser, getUser } = require('./users');
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'PRODUCTION') dotenv.config();
 
 //connecting to db
 const connectDB = require('./config/db');
@@ -117,6 +117,14 @@ io.on('connect', (socket) => {
   });
 });
 //end socket.io at server side
+
+if (process.env.NODE_ENV === 'PRODUCTION') {
+  app.use(express.static(path.join(__dirname, './client/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/build/index.html'));
+  });
+}
 
 server.listen(PORT, () => {
   console.log(`Your Server is runing on PORT:  ${PORT} `);

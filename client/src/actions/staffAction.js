@@ -67,7 +67,7 @@ export const updateToVip = (data) => async (dispatch) => {
 
 export const processedOrder = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const res = await get(`/orders/processedOrder`);
     dispatch({
       type: Type.PROCESSED_ORDER,
@@ -79,7 +79,7 @@ export const processedOrder = () => async (dispatch) => {
 };
 export const wipOrder = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const res = await get(`/orders/wipOrder`);
     dispatch({
       type: Type.WIP_ORDER,
@@ -91,7 +91,7 @@ export const wipOrder = () => async (dispatch) => {
 };
 export const plannedOrder = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const res = await get(`/orders/plannedOrder`);
     dispatch({
       type: Type.PLANNED_ORDER,
@@ -103,7 +103,7 @@ export const plannedOrder = () => async (dispatch) => {
 };
 export const pieChartOrders = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const res = await get(`/orders/pieChartOrders`);
     dispatch({
       type: Type.PIE_CHART_EMP_DATA,
@@ -115,7 +115,7 @@ export const pieChartOrders = () => async (dispatch) => {
 };
 export const weeklyOrdersPrice = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const res = await get(`/orders/weeklyOrdersPrice`);
     dispatch({
       type: Type.WEEKLY_ORDER_PRICES,
@@ -127,7 +127,7 @@ export const weeklyOrdersPrice = () => async (dispatch) => {
 };
 export const monthlyOrdersPrice = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const res = await get(`/orders/monthlyOrdersPrice`);
     dispatch({
       type: Type.MONTHLY_ORDER_PRICES,
@@ -139,7 +139,7 @@ export const monthlyOrdersPrice = () => async (dispatch) => {
 };
 export const yearlyOrdersPrice = () => async (dispatch) => {
   try {
-    debugger;
+    // debugger;
     const res = await get(`/orders/yearlyOrdersPrice`);
     dispatch({
       type: Type.YEARLY_ORDER_PRICES,

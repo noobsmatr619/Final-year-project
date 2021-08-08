@@ -79,7 +79,7 @@ const Manager = ({
     setmodalAssign(form);
   };
   const handleCalendarChange = (calenderDate) => {
-    debugger;
+    // debugger;
     setcalenderDate(new Date(calenderDate));
   };
   if (!Loading)

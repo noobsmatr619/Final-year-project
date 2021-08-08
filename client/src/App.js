@@ -14,7 +14,7 @@ import { LoadUser } from './actions/authActions';
 //old code
 // import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 //new code
-import { Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import setAuthToken from './utils/setAuthToken';
 //Loading
 import Loader from 'react-loader-spinner';
@@ -137,7 +137,7 @@ function App() {
               <title> {'DMC'}</title>
             </Helmet>
 
-            {/* <Redirect exact from='/' to='/auth' /> */}
+            {/* <Redirect exact from="/" to="/" /> */}
             {/* <PrivateRoute exact path='/user-management' component={Admin} /> */}
             <Route exact path="/user-management" component={Admin} />
             <Route exact path="/staff" component={Staff} />
@@ -152,7 +152,7 @@ function App() {
             <Route exact path="/auth" component={Auth} />
             <Route exact path="/health-safety" component={HealthSafety} />
             {/* <Route exact path='/loading' component={Loading} /> */}
-            <Route exact path='/reports' component={Reports} />
+            <Route exact path="/reports" component={Reports} />
             <Route exact path="/stock" component={Stock} />
             <Route
               exact

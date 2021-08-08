@@ -15,6 +15,17 @@ export const LoadUser = (history) => async (dispatch) => {
       type: Type.LOAD_USER,
       payload: res.data.data
     });
+  } catch (error) {
+    history.push('/auth');
+
+    console.log(error);
+  }
+};
+
+const moveUserAtStartRoute = async (history) => {
+  try {
+    const res = await axios.get(baseUrl + '/auth/getMe');
+
     toast.success('Login Succesfully');
     if (res.data.data.type === 'admin') {
       history.push('/user-management');
@@ -25,12 +36,13 @@ export const LoadUser = (history) => async (dispatch) => {
     } else if (res.data.data.type === 'employee') {
       history.push('/emp');
     }
+    return true;
   } catch (error) {
     history.push('/auth');
-
-    console.log(error);
+    return true;
   }
 };
+
 export const OnlyLoadUser = () => async (dispatch) => {
   if (localStorage.CRM_TOKEN) {
     setAuthToken(localStorage.CRM_TOKEN);
@@ -48,12 +60,13 @@ export const OnlyLoadUser = () => async (dispatch) => {
 export const loginUser = (form, history) => async (dispatch) => {
   axios
     .post(baseUrl + '/auth/login', form)
-    .then((response) => {
+    .then(async (response) => {
       dispatch({
         type: Type.LOGIN_USER,
         payload: response.data
       });
       dispatch(LoadUser(history));
+      moveUserAtStartRoute(history);
     })
     .catch((error) => {
       toast.error(error.response.data.error);
@@ -62,18 +75,20 @@ export const loginUser = (form, history) => async (dispatch) => {
 export const registerUser = (state, history) => async (dispatch) => {
   axios
     .post(baseUrl + '/auth/registerUser', state)
-    .then((response) => {
+    .then(async (response) => {
       dispatch({
         type: Type.REGISTER_USER,
         payload: response.data
       });
       toast.success('Register Succesfully');
       dispatch(LoadUser(history));
+      moveUserAtStartRoute(history);
     })
     .catch((error) => {
       toast.error(error.response.data.error);
     });
 };
+
 export const LogoutUser = () => (dispatch) => {
   dispatch({ type: Type.LOGOUT_USER });
 };

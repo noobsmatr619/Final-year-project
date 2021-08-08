@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SliderData } from './SliderData';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
@@ -15,13 +15,42 @@ import { useDispatch } from 'react-redux';
 import HomeIcon from '@material-ui/icons/Home';
 import ChatIcon from '@material-ui/icons/Chat';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import { Redirect } from 'react-router-dom';
+import Validate from './Validate';
 function Header() {
   const dispatch = useDispatch();
   const history = useHistory();
   let [slidebarHandler, SlidebarState] = useState(false);
   let slideSidebar = () => SlidebarState(!slidebarHandler);
+
+  // useEffect(() => {
+  //   // const CRM_TOKEN = localStorage.getItem('CRM_TOKEN');
+  //   // if (CRM_TOKEN === 'undefined' || CRM_TOKEN === '') {
+  //   //   history.push('/auth');
+  //   // }
+  // }, []);
+  // const checkUser = () => {
+  //   const CRM_TOKEN = localStorage.getItem('CRM_TOKEN');
+  //   if (CRM_TOKEN === 'undefined' || CRM_TOKEN === '') {
+  //     history.push('/auth');
+  //   }
+  // };
+  const userTypeRouting = () => {
+    const user_type = localStorage.getItem('user_type');
+    if (user_type === 'admin') {
+      history.push('/user-management');
+    } else if (user_type === 'staff') {
+      history.push('/staff');
+    } else if (user_type === 'manager') {
+      history.push('/manager');
+    } else if (user_type === 'employee') {
+      history.push('/emp');
+    }
+  };
+
   return (
     <div className="header">
+      <Validate />
       <div className="menuIcon">
         {' '}
         {/* collapsing menu */}
@@ -37,13 +66,16 @@ function Header() {
             </li>
 
             {SliderData.map((item, index) => {
-              if (item.title === "Logout") {
-                 return (
-                  <li key={index} className={item.cName} onClick={(e) => {
-              e.preventDefault();
-              dispatch(LogoutUser());
-              history.push('/auth');
-            }}>
+              if (item.title === 'Logout') {
+                return (
+                  <li
+                    key={index}
+                    className={item.cName}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(LogoutUser());
+                      history.push('/auth');
+                    }}>
                     <Link to="!#">
                       {item.icon}
                       <span className="each-span">{item.title}</span>
@@ -51,14 +83,25 @@ function Header() {
                   </li>
                 );
               } else {
-                return (
-                  <li key={index} className={item.cName}>
-                    <Link to={item.path}>
-                      {item.icon}
-                      <span className="each-span">{item.title}</span>
-                    </Link>
-                  </li>
-                );
+                if (item.title === 'Home') {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link onClick={userTypeRouting}>
+                        {item.icon}
+                        <span className="each-span">{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li key={index} className={item.cName}>
+                      <Link to={item.path}>
+                        {item.icon}
+                        <span className="each-span">{item.title}</span>
+                      </Link>
+                    </li>
+                  );
+                }
               }
             })}
           </ul>
@@ -73,13 +116,13 @@ function Header() {
         <div className="headerLeftOpt">
           <span className="each-span headerOptLineOne ">
             {' '}
-            <Link to="/" className="homestyle">
+            <Link onClick={userTypeRouting} className="homestyle">
               {' '}
               <HomeIcon />{' '}
             </Link>
           </span>{' '}
           <br />
-          <Link to="/" className="iconStyle">
+          <Link onClick={userTypeRouting} className="iconStyle">
             {' '}
             <span className="each-span headerOptLineTwo" id="joshi">
               Home
@@ -155,7 +198,10 @@ function Header() {
               <SettingsIcon />
             </span>
             <br />
-            <span className="each-span headerOptLineTwo"> Machines Target</span>{' '}
+            <span className="each-span headerOptLineTwo">
+              {' '}
+              Machines Target
+            </span>{' '}
           </Link>
         </div>
       </div>
