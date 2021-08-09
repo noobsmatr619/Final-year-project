@@ -6,7 +6,6 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 
 // const socket = io('http://localhost:5000');
 const socket = io('https://dmcerp.herokuapp.com');
-
 const MachinesStatus = () => {
   const [machines, setMessage] = useState([]);
   const colors = {

@@ -1,10 +1,10 @@
 //importing encryptions
-const { encrypt, decrypt } = require("./../utils/encryptions");
+const { encrypt, decrypt } = require('./../utils/encryptions');
 //importing Models
 
-const Chat = require("./../Models/Chat");
+const Chat = require('./../Models/Chat');
 
-const { sendServerError } = require("./../utils/errors/serverError");
+const { sendServerError } = require('./../utils/errors/serverError');
 
 //@desc Adding Message To Chat
 //@route POST /chat/sendMessage
@@ -12,23 +12,23 @@ const { sendServerError } = require("./../utils/errors/serverError");
 
 exports.sendMessage = async (req, res, next) => {
   const { sender, reciever, message, type } = req.body;
-
+  console.log(req.body);
   if (!sender || !reciever || !message) {
-    return sendServerError(res, 400, "Sender Or Reciever Or Message Missing");
+    return sendServerError(res, 400, 'Sender Or Reciever Or Message Missing');
   }
   const encryptedMessages = encrypt(message);
   const messages = {
     sender: sender,
     reciever: reciever,
     text: encryptedMessages,
-    type: type,
+    type: type
   };
   let result;
   const isChat = await Chat.find({
     $or: [
       { $and: [{ sender: reciever }, { reciever: sender }] },
-      { $and: [{ sender: sender }, { reciever: reciever }] },
-    ],
+      { $and: [{ sender: sender }, { reciever: reciever }] }
+    ]
   });
   if (isChat.length > 0) {
     const chattId = isChat[0]._id;
@@ -40,14 +40,14 @@ exports.sendMessage = async (req, res, next) => {
         reciever,
         lastMessageText: message,
         lastMessageTime: Date.now(),
-        $push: { messages: messages },
+        $push: { messages: messages }
       }
     );
     result = await Chat.find({
       $or: [
         { $and: [{ sender: reciever }, { reciever: sender }] },
-        { $and: [{ sender: sender }, { reciever: reciever }] },
-      ],
+        { $and: [{ sender: sender }, { reciever: reciever }] }
+      ]
     });
 
     result[0].messages.forEach((element) => {
@@ -59,13 +59,13 @@ exports.sendMessage = async (req, res, next) => {
       reciever,
       lastMessageText: message,
       lastMessageTime: Date.now(),
-      messages: [messages],
+      messages: [messages]
     });
     result = chat;
   }
   return res.status(200).json({
     success: true,
-    data: result,
+    data: result
   });
 };
 
@@ -76,23 +76,27 @@ exports.getAllChats = async (req, res, next) => {
   const user = req.user.id;
   try {
     const chat = await Chat.find({
-      $or: [{ reciever: user }, { sender: user }],
+      $or: [{ reciever: user }, { sender: user }]
     })
       .populate({
-        path: "reciever",
-        select: "displayName profile",
+        path: 'reciever',
+        select: 'displayName profile'
       })
       .populate({
-        path: "sender",
-        select: "displayName profile",
+        path: 'sender',
+        select: 'displayName profile'
       });
 
     return res.status(200).json({
       success: true,
-      data: chat,
+      data: chat
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -102,17 +106,17 @@ exports.getAllChats = async (req, res, next) => {
 exports.getUserChat = async (req, res, next) => {
   const { sender, reciever } = req.query;
   if (!sender || !reciever) {
-    return sendServerError(res, 400, "Sender Or Reciever Or Message Missing");
+    return sendServerError(res, 400, 'Sender Or Reciever Or Message Missing');
   }
   try {
     const chat = await Chat.find({
       $or: [
         { $and: [{ sender: reciever }, { reciever: sender }] },
-        { $and: [{ sender: sender }, { reciever: reciever }] },
-      ],
+        { $and: [{ sender: sender }, { reciever: reciever }] }
+      ]
     }).populate({
-      path: "reciever",
-      select: "displayName profile",
+      path: 'reciever',
+      select: 'displayName profile'
     });
 
     chat[0].messages.forEach((element) => {
@@ -120,9 +124,13 @@ exports.getUserChat = async (req, res, next) => {
     });
     return res.status(200).json({
       success: true,
-      data: chat,
+      data: chat
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };

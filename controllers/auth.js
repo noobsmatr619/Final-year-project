@@ -39,7 +39,11 @@ exports.registerAdmin = async (req, res, next) => {
   if (data.success) {
     sendTokenResponse(data.user, 200, res);
   } else {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -92,7 +96,11 @@ exports.getUserDetails = async (req, res, next) => {
       data: user
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -140,7 +148,11 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
       message: 'Password Updated Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 
@@ -159,7 +171,11 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
       messsage: 'Data Updated Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 
@@ -178,7 +194,11 @@ exports.updateRole = asyncHandler(async (req, res, next) => {
       messsage: 'Data Updated Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 exports.updatePaymentStatus = asyncHandler(async (req, res, next) => {
@@ -193,7 +213,11 @@ exports.updatePaymentStatus = asyncHandler(async (req, res, next) => {
       messsage: 'Data Updated Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 
@@ -212,7 +236,11 @@ exports.approveuser = asyncHandler(async (req, res, next) => {
       messsage: 'Data Updated Successfully'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 
@@ -226,7 +254,11 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
       data: users
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 exports.getEmployeeAndStaff = asyncHandler(async (req, res, next) => {
@@ -236,7 +268,11 @@ exports.getEmployeeAndStaff = asyncHandler(async (req, res, next) => {
       data: users
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 //@desc Get All Users
@@ -249,7 +285,11 @@ exports.getAllEmployees = asyncHandler(async (req, res, next) => {
       data: users
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 exports.getAllStaff = asyncHandler(async (req, res, next) => {
@@ -259,7 +299,11 @@ exports.getAllStaff = asyncHandler(async (req, res, next) => {
       data: users
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 
@@ -298,20 +342,48 @@ exports.requestAccountChangeDetails = asyncHandler(async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });
 
 exports.deleteUser = asyncHandler(async (req, res, next) => {
   try {
-    console.log(req.params)
+    console.log(req.params);
     const user = await User.findById({ _id: req.params.id });
     if (!user) {
       return sendServerError(res, 404, 'User not found');
     }
     await user.remove();
-    res.status(200).json({message:"user deleted successfully"});
+    res.status(200).json({ message: 'user deleted successfully' });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
+  }
+});
+
+exports.searchUsers = asyncHandler(async (req, res, next) => {
+  try {
+    let users = [];
+    if (req.query.displayName) {
+      await User.find({
+        displayName: new RegExp(req.query.displayName, 'i')
+      });
+    } else {
+      users = await User.find();
+    }
+    res.status(200).json({ data: users });
+  } catch (error) {
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 });

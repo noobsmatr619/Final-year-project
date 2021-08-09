@@ -11,7 +11,8 @@ const {
   wipOrder,
   yearlyOrdersPrice,
   monthlyOrdersPrice,
-  weeklyOrdersPrice
+  weeklyOrdersPrice,
+  getAllProcessedOrders
 } = require('./../controllers/orders');
 const { protect } = require('./../middleware/auth');
 router.post('/placeMyOrder', protect, placeMyOrder);
@@ -24,6 +25,7 @@ router.get('/pieChartOrders', protect, pieChartOrders);
 router.get('/yearlyOrdersPrice', protect, yearlyOrdersPrice);
 router.get('/monthlyOrdersPrice', protect, monthlyOrdersPrice);
 router.get('/weeklyOrdersPrice', protect, weeklyOrdersPrice);
+router.get('/getAllProcessedOrders', protect, getAllProcessedOrders);
 router.get(
   '/getEmployeeOrdersForStaffPage',
   protect,

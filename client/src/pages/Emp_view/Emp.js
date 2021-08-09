@@ -77,6 +77,12 @@ class Emp extends Component {
           Cell: (row) => row?.value
         },
         {
+          Header: 'Total Price',
+          accessor: 'total_price',
+          width: 150,
+          Cell: (row) => row?.value
+        },
+        {
           Header: 'Action',
           accessor: 'action',
           width: 250,
@@ -229,7 +235,8 @@ class Emp extends Component {
             status: order.status,
             assignedBy: order.assignedBy.displayName,
             product: order.product.name,
-            price: order.price
+            price: order.price,
+            total_price: Number(order.count) * Number(order.price)
           });
         });
         this.setState({

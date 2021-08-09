@@ -82,6 +82,7 @@ export default (state = initialState, action) => {
     case Type.REGISTER_USER:
       localStorage.setItem('CRM_TOKEN', action.payload.token);
       localStorage.setItem('user_type', action.payload.user.type);
+      localStorage.setItem('id', action.payload.user._id);
       return {
         ...state,
         token: action.payload.token,
@@ -90,6 +91,7 @@ export default (state = initialState, action) => {
     case Type.LOGIN_USER:
       localStorage.setItem('CRM_TOKEN', action.payload.token);
       localStorage.setItem('user_type', action.payload.user.type);
+      localStorage.setItem('id', action.payload.user._id);
       return {
         ...state,
         token: action.payload.token,

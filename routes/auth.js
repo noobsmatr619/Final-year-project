@@ -12,7 +12,8 @@ const {
   getAllStaff,
   getEmployeeAndStaff,
   updatePaymentStatus,
-  deleteUser
+  deleteUser,
+  searchUsers
 } = require('./../controllers/auth');
 const { protect } = require('./../middleware/auth');
 router.post('/registerUser', registerAdmin);
@@ -26,6 +27,7 @@ router.get('/getMe', protect, getMe);
 router.get('/getEmployeeAndStaff', protect, getEmployeeAndStaff);
 router.get('/getAllEmployees', protect, getAllEmployees);
 router.delete('/users/:id', protect, deleteUser);
+router.get('/searchUsers', searchUsers);
 
 router.post(
   '/requestAccountChangeDetails',
