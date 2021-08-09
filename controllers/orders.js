@@ -23,7 +23,11 @@ exports.placeMyOrder = async (req, res, next) => {
       message: 'Order Placed Succsfull'
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -50,7 +54,11 @@ exports.getEmployeeOrders = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -63,9 +71,40 @@ exports.processedOrder = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
+
+exports.getAllProcessedOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({ status: 3 });
+    const wipOrders = await Order.find({ status: 2 });
+    const dailyExpense = orders.reduce(
+      (acc, order) => Number(order.price) + acc,
+      0
+    );
+    console.log(orders);
+    res
+      .status(200)
+      .json({
+        orders: orders,
+        dailyExpense: dailyExpense,
+        wipOrders: wipOrders
+      });
+  } catch (error) {
+    console.log(error);
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
+  }
+};
+
 exports.plannedOrder = async (req, res, next) => {
   try {
     const orders = await Order.countDocuments({ status: 1 });
@@ -75,7 +114,11 @@ exports.plannedOrder = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 exports.wipOrder = async (req, res, next) => {
@@ -87,7 +130,11 @@ exports.wipOrder = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -128,7 +175,11 @@ exports.pieChartOrders = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 exports.monthlyOrdersPrice = async (req, res, next) => {
@@ -148,7 +199,11 @@ exports.monthlyOrdersPrice = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 exports.yearlyOrdersPrice = async (req, res, next) => {
@@ -168,28 +223,36 @@ exports.yearlyOrdersPrice = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 exports.weeklyOrdersPrice = async (req, res, next) => {
- try {
-   const orders = await Order.find({ status: 3 });
-   const price = 0;
-   price = orders.reduce((accumulator, order) => {
-     if (moment(order.date, 'MM-DD-YYYY').week() == moment().format('w')) {
-       return accumulator + Number(order.price);
-     } else {
-       return accumulator + 0;
-     }
-   }, 0);
+  try {
+    const orders = await Order.find({ status: 3 });
+    const price = 0;
+    price = orders.reduce((accumulator, order) => {
+      if (moment(order.date, 'MM-DD-YYYY').week() == moment().format('w')) {
+        return accumulator + Number(order.price);
+      } else {
+        return accumulator + 0;
+      }
+    }, 0);
 
-   res.status(200).json({
-     data: price
-   });
- } catch (error) {
-   console.log(error);
-   return sendServerError(res, 500, "Please check all the information is filled");
- }
+    res.status(200).json({
+      data: price
+    });
+  } catch (error) {
+    console.log(error);
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
+  }
 };
 
 exports.getEmployeeOrdersForStaffPage = async (req, res, next) => {
@@ -207,7 +270,11 @@ exports.getEmployeeOrdersForStaffPage = async (req, res, next) => {
       data: orders
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 //@desc Get All Orders
@@ -221,7 +288,11 @@ exports.getAllOrders = async (req, res, next) => {
       data: orders
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -241,7 +312,11 @@ exports.getSingleOrder = async (req, res, next) => {
       data: order
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -264,7 +339,11 @@ exports.getSalesAnalytics = async (req, res, next) => {
       data: orders
     });
   } catch (error) {
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -287,6 +366,10 @@ exports.updateOrderStatus = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };

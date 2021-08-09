@@ -3,7 +3,7 @@ import Nav from '../Header/Header';
 import { Container } from 'react-bootstrap';
 //socket
 //timeago
-import { socket } from '../../socketService';
+import io from 'socket.io-client';
 import TimeAgo from 'react-timeago';
 import { convertDate } from './../../utils/functions';
 import './Chat.css';
@@ -15,6 +15,8 @@ import { baseUrl, baseFileUrl } from './../../baseUrl';
 let chatSender = null;
 let chatReciever = null;
 let activeChat = null;
+// const socket = io('http://localhost:5000');
+const socket = io('https://dmcerp.herokuapp.com');
 const Chat = (props) => {
   const [myChats, setmyChats] = useState([]);
   const [userChat, setuserChat] = useState([]);
@@ -26,21 +28,15 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [isReciever, setIsReciever] = useState(false);
   const [sender, setSender] = useState('');
+  const [chatRefresh, setChatRefresh] = useState(false);
 
   useEffect(() => {
-    socket.on('message', (result) => {
-      if (result.reciever == chatSender && result.sender == chatReciever) {
-        setMessages((messages) => [...messages, result]);
-        // $(".msg_history")
-        //   .stop()
-        //   .animate({ scrollTop: $(".msg_history")[0].scrollHeight }, 1000);
-      } else if (result.sender == chatSender) {
-        setMessages((messages) => [...messages, result]);
-        // $(".msg_history")
-        //   .stop()
-        //   .animate({ scrollTop: $(".msg_history")[0].scrollHeight }, 1000);
-      } else {
-      }
+    getSearchedUsers();
+  }, []);
+
+  useEffect(() => {
+    socket.on('send_back_message', (result) => {
+      setMessages((messages) => [...messages, result]);
     });
   }, []);
 
@@ -81,9 +77,25 @@ const Chat = (props) => {
       .then((response) => {
         setuserChat(response.data.data);
         setMessages(response.data.data[0].messages);
-        // $(".msg_history")
-        //   .stop()
-        //   .animate({ scrollTop: $(".msg_history")[0].scrollHeight }, 1000);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getSingleChatWithResult = (senders, reciever, result) => {
+    Axios.get(baseUrl + '/chats/getUserChat', {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      },
+      params: {
+        sender: senders,
+        reciever: reciever
+      }
+    })
+      .then((response) => {
+        setuserChat(response.data.data);
+        setMessages((messages) => [...response.data.data[0].messages, result]);
       })
       .catch((error) => {
         console.log(error);
@@ -116,9 +128,24 @@ const Chat = (props) => {
       })
       .catch((error) => {});
   }, []);
-  const getSearchedUsers = (searchedKeyword) => {
-    console.log('searched', searchedKeyword);
-    Axios.get(baseUrl + `/auth/searchUsers?displayName=${searchedKeyword}`, {
+
+  useEffect(() => {}, [messages]);
+
+  function getChat() {
+    Axios.get(baseUrl + '/chats/getAllChats', {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+      }
+    })
+      .then((response) => {
+        setmyChats(response.data.data);
+        getUserChat(response.data.data[0]);
+        setChatRefresh(true);
+      })
+      .catch((error) => {});
+  }
+  const getSearchedUsers = () => {
+    Axios.get(baseUrl + `/auth/searchUsers`, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
       }
@@ -141,42 +168,21 @@ const Chat = (props) => {
     }
     getSingleChat(chat.sender.id, chat.reciever.id);
   };
+  let count = 0;
+
   return (
     <div>
       <Nav></Nav>
       <Container fluid>
-        <div class="container-fluid h-100">
-          <div class="row justify-content-center h-100">
-            <div class="col-md-4 col-xl-3 chat">
-              <div class="card mb-sm-3 mb-md-0 contacts_card">
-                <div class="card-header">
-                  <div class="input-group">
-                    <input
-                      onChange={(e) => {
-                        if (e.target.value !== '') {
-                          setIsChats(false);
-                          getSearchedUsers(e.target.value);
-                          setSearch(e.target.value);
-                        } else {
-                          setIsChats(true);
-                          setSearch(e.target.value);
-                        }
-                      }}
-                      value={search}
-                      type="text"
-                      placeholder="Search..."
-                      name=""
-                      class="form-control search"
-                    />
-                    <div class="input-group-prepend">
-                      <span class="input-group-text search_btn">
-                        <i class="fas fa-search"></i>
-                      </span>
-                    </div>
-                  </div>
+        <div className="container-fluid h-100 chat_root">
+          <div className="row justify-content-center h-100">
+            <div className="col-md-4 col-xl-3 chat">
+              <div className="card mb-sm-3 mb-md-0 contacts_card">
+                <div className="card-header">
+                  <div className="input-group"></div>
                 </div>
-                <div class="card-body contacts_body">
-                  <ui class="contacts">
+                <div className="card-body contacts_body">
+                  <ui className="contacts">
                     {isChats ? (
                       myChats.length > 0 ? (
                         myChats.map((chat) => {
@@ -184,14 +190,14 @@ const Chat = (props) => {
                             <li
                               key={chat._id}
                               onClick={(e) => getUserChat(chat)}>
-                              <div class="d-flex bd-highlight">
-                                <div class="img_cont">
+                              <div className="d-flex bd-highlight">
+                                <div className="img_cont">
                                   <img
                                     src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                                    class="rounded-circle user_img"
+                                    className="rounded-circle user_img"
                                   />
                                 </div>
-                                <div class="user_info">
+                                <div className="user_info">
                                   <span>
                                     {' '}
                                     {chat.sender.id === sender
@@ -209,29 +215,31 @@ const Chat = (props) => {
                         })
                       ) : (
                         <li>
-                          <div class="d-flex bd-highlight">
-                            <div class="user_info">
-                              <span>Empty Chat</span>
-                              <p>Search Users And Chat</p>
+                          <div className="d-flex bd-highlight">
+                            <div className="user_info">
+                              <span>User List</span>
                             </div>
                           </div>
                         </li>
                       )
-                    ) : searchedUsers.length > 0 ? (
-                      searchedUsers.map((user) => {
+                    ) : (
+                      ''
+                    )}
+                    {searchedUsers.map((user) => {
+                      if (user.id != localStorage.getItem('id')) {
                         return (
                           <a
                             href={`/chat/${user._id}/${user.displayName}`}
                             style={{ textDecoration: 'none', color: 'white' }}>
                             <li key={user._id}>
-                              <div class="d-flex bd-highlight">
-                                <div class="img_cont">
+                              <div className="d-flex bd-highlight">
+                                <div className="img_cont">
                                   <img
                                     src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                                    class="rounded-circle user_img"
+                                    className="rounded-circle user_img"
                                   />
                                 </div>
-                                <div class="user_info">
+                                <div className="user_info">
                                   <span> {user.displayName}</span>
                                   <p>{user.email}</p>
                                 </div>
@@ -239,34 +247,25 @@ const Chat = (props) => {
                             </li>
                           </a>
                         );
-                      })
-                    ) : (
-                      <li>
-                        <div class="d-flex bd-highlight">
-                          <div class="user_info">
-                            <span>Searching</span>
-                            <p>No User Found...</p>
-                          </div>
-                        </div>
-                      </li>
-                    )}
+                      }
+                    })}
                   </ui>
                 </div>
-                <div class="card-footer"></div>
+                <div className="card-footer"></div>
               </div>
             </div>
-            <div class="col-md-8 col-xl-6 chat">
-              <div class="card">
-                <div class="card-header msg_head">
-                  <div class="d-flex bd-highlight">
-                    <div class="img_cont">
+            <div className="col-md-8 col-xl-6 chat">
+              <div className="card">
+                <div className="card-header msg_head">
+                  <div className="d-flex bd-highlight">
+                    <div className="img_cont">
                       <img
                         src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                        class="rounded-circle user_img"
+                        className="rounded-circle user_img"
                       />
-                      <span class="online_icon"></span>
+                      <span className="online_icon"></span>
                     </div>
-                    <div class="user_info">
+                    <div className="user_info">
                       {activeChat == null ? (
                         <span>Select Chat</span>
                       ) : (
@@ -276,43 +275,40 @@ const Chat = (props) => {
                       <p>{messages.length} Messages</p>
                     </div>
                   </div>
-                  <span id="action_menu_btn">
-                    <i class="fas fa-ellipsis-v"></i>
-                  </span>
                 </div>
-                <div class="card-body msg_card_body">
+                <div className="card-body msg_card_body">
                   {messages.length > 0 ? (
                     messages.map((message) => {
                       return message.sender === sender ? (
                         <div
                           key={message._id}
-                          class="d-flex justify-content-end mb-4">
-                          <div class="msg_cotainer_send">
+                          className="d-flex justify-content-end mb-4">
+                          <div className="msg_cotainer_send">
                             {message.text}
-                            <span class="msg_time_send">
+                            <span className="msg_time_send">
                               {convertDate(message.createdAt)}
                             </span>
                           </div>
-                          <div class="img_cont_msg">
+                          <div className="img_cont_msg">
                             <img
                               src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                              class="rounded-circle user_img_msg"
+                              className="rounded-circle user_img_msg"
                             />
                           </div>
                         </div>
                       ) : (
                         <div
                           key={message._id}
-                          class="d-flex justify-content-start mb-4">
-                          <div class="img_cont_msg">
+                          className="d-flex justify-content-start mb-4">
+                          <div className="img_cont_msg">
                             <img
                               src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                              class="rounded-circle user_img_msg"
+                              className="rounded-circle user_img_msg"
                             />
                           </div>
-                          <div class="msg_cotainer">
+                          <div className="msg_cotainer">
                             {message.text}
-                            <span class="msg_time">
+                            <span className="msg_time">
                               {convertDate(message.createdAt)}
                             </span>
                           </div>
@@ -320,39 +316,39 @@ const Chat = (props) => {
                       );
                     })
                   ) : (
-                    <div class="d-flex justify-content-start mb-4">
-                      <div class="img_cont_msg">
+                    <div className="d-flex justify-content-start mb-4">
+                      <div className="img_cont_msg">
                         <img
                           src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                          class="rounded-circle user_img_msg"
+                          className="rounded-circle user_img_msg"
                         />
                       </div>
-                      <div class="msg_cotainer">
+                      <div className="msg_cotainer">
                         Empty Inbox
-                        <span class="msg_time">Now</span>
+                        <span className="msg_time">Now</span>
                       </div>
                     </div>
                   )}
                 </div>
-                <div class="card-footer">
-                  <div class="input-group">
-                    {/* <div class='input-group-append'>
-                      <span class='input-group-text attach_btn'>
-                        <i class='fas fa-paperclip'></i>
+                <div className="card-footer">
+                  <div className="input-group">
+                    {/* <div className='input-group-append'>
+                      <span className='input-group-text attach_btn'>
+                        <i className='fas fa-paperclip'></i>
                       </span>
                     </div> */}
                     <textarea
                       name=""
-                      class="form-control type_msg"
+                      className="form-control type_msg"
                       placeholder="Type your message..."
                       value={message}
                       onChange={({ target: { value } }) => setMessage(value)}
                       onKeyPress={(event) =>
                         event.key === 'Enter' ? sendMessage(event) : null
                       }></textarea>
-                    <div class="input-group-append">
-                      <span class="input-group-text send_btn">
-                        <i class="fas fa-location-arrow"></i>
+                    <div className="input-group-append">
+                      <span className="input-group-text send_btn">
+                        <i className="fas fa-location-arrow"></i>
                       </span>
                     </div>
                   </div>

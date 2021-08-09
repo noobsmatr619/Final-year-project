@@ -9,6 +9,7 @@ const AddMaterial = () => {
   const [name, setName] = useState('');
   const [count, setCount] = useState('');
   const [machine, setMachine] = useState('');
+  const [price, setPrice] = useState('');
   useEffect(() => {
     axios
       .get(baseUrl + '/machines/getAllMachines', {
@@ -29,7 +30,8 @@ const AddMaterial = () => {
       type,
       count,
       machine,
-      name
+      name,
+      price
     };
     console.log(data);
     axios
@@ -76,6 +78,18 @@ const AddMaterial = () => {
             onChange={(e) => setCount(e.target.value)}
           />
         </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            data-testid="price"
+            type="text"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+        </Form.Group>
+
         <Form.Group controlId="exampleForm.SelectCustom">
           <Form.Label>Select Machine</Form.Label>
           <Form.Control

@@ -19,7 +19,7 @@ const Create = () => {
             const machineData = {
                 name, model, build, status, target
             }
-            Axios.post('http://localhost:5000/api/v1/machines/addNewMachine', machineData)
+            Axios.post('/api/v1/machines/addNewMachine', machineData)
                 .then((response) => {
                     Swal(response.data.message);
                 }).catch((error) => {
