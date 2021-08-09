@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Calendar from 'react-calendar';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -7,7 +8,8 @@ import {
   getEmployeeAndStaff,
   processedOrder,
   updatePaymentStatus,
-  pieChartOrders
+  pieChartOrders,
+  wipOrder
 } from '../../actions/staffAction';
 import { getUser } from '../../actions/userActions';
 import { getAllTeams } from '../../actions/teamsActions';
@@ -23,6 +25,7 @@ import AddTeamModal from './components/AddteamModel/AddTeamModel';
 import AddProjectModal from './components/AddProject/AddProjectModal';
 import AssignModal from './components/AssgnModal/AssignModal';
 import './Manager.css';
+import { baseUrl } from './../../baseUrl';
 
 const Manager = ({
   getUser,
@@ -54,6 +57,9 @@ const Manager = ({
       setLoading(true);
     };
     runActions();
+    getAllOrders();
+    getAllRawMaterialsPrices();
+    getConfirmedProducts();
   }, []);
   console.log(employees);
   // const { employees } = useSelector(({ app }) => ({
@@ -64,6 +70,56 @@ const Manager = ({
   const [modal, setModal] = useState(false);
   const [modalProject, setModalProject] = useState(false);
   const [modalAssign, setmodalAssign] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [doneOrders, setDoneOrders] = useState(0);
+  const [wipOrders, setWipOrders] = useState(0);
+  const [rawMaterialsPrice, setRawMaterialsPrice] = useState(0);
+
+  const getAllOrders = async () => {
+    try {
+      const res = await axios.get(`${baseUrl}/orders/getAllProcessedOrders`);
+      console.log(res.data);
+      setDoneOrders(res.data.orders.length);
+      setWipOrders(res.data.wipOrders.length);
+    } catch (error) {
+      console.log('processedOrder');
+      console.log(error);
+    }
+  };
+
+  const getAllRawMaterialsPrices = async () => {
+    try {
+      const res = await axios.get(
+        `${baseUrl}/rawMaterials/getAllRawMaterialsPrices`
+      );
+      setRawMaterialsPrice(res.data);
+    } catch (error) {
+      console.log('processedOrder');
+      console.log(error);
+    }
+  };
+
+  const getConfirmedProducts = () => {
+    axios
+      .get(baseUrl + '/products/getProductsDone', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+        }
+      })
+      .then((response) => {
+        const data = response.data.data;
+        let total_price = 0;
+        data.forEach((product) => {
+          total_price =
+            total_price + Number(product.count) * Number(product.price);
+        });
+        setTotalPrice(total_price);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     setmodalAssign(
       Array(teams.length)
@@ -116,12 +172,12 @@ const Manager = ({
             <Col md={6} sm={12} className="bg-sky">
               <Row className="mt-3">
                 <Col md={6} sm={12}>
-                  <div className="bg-danger d-flex justify-content-between my-card">
+                  <div className="bg-success d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        {dailySales}
+                        {totalPrice}
                       </span>
-                      <span className="text-white">Daily sales</span>
+                      <span className="text-white">Total Sale</span>
                     </div>
                     <div>
                       <i className="fa fa-calendar fa-2x text-white"></i>
@@ -129,12 +185,12 @@ const Manager = ({
                   </div>
                 </Col>
                 <Col md={6} sm={12}>
-                  <div className="bg-success d-flex justify-content-between my-card">
+                  <div className="bg-danger d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        1200
+                        {rawMaterialsPrice}
                       </span>
-                      <span className="text-white">Daily Expense</span>
+                      <span className="text-white">Total Expense</span>
                     </div>
                     <div>
                       <i className="fa fa-bookmark fa-2x text-white"></i>
@@ -147,7 +203,7 @@ const Manager = ({
                   <div className="bg-primary d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        2055
+                        {doneOrders}
                       </span>
                       <span className="text-white">Done</span>
                     </div>
@@ -160,9 +216,9 @@ const Manager = ({
                   <div className="bg-warning d-flex justify-content-between my-card">
                     <div className="d-flex flex-column">
                       <span className="my-card-number font-weight-bold text-white">
-                        5220
+                        {wipOrders}
                       </span>
-                      <span className="text-white">Shipment</span>
+                      <span className="text-white">Work In Progress</span>
                     </div>
                     <div>
                       <i className="fa fa-bus fa-2x text-white"></i>
@@ -171,7 +227,7 @@ const Manager = ({
                 </Col>
               </Row>
               <div className="d-flex justify-content-center  bg-light mt-5">
-                expanses
+                Weekly No of sales
                 <MyChart empPieChart={empPieChart}></MyChart>
               </div>
             </Col>
@@ -181,7 +237,7 @@ const Manager = ({
                   style={{
                     justifyContent: 'space-between'
                   }}
-                  as="li" 
+                  as="li"
                   active
                   className="d-flex">
                   <Button disabled={true}>Project</Button>
@@ -322,7 +378,8 @@ const mapStateToProps = (state) => ({
   staff: state.app.staff,
   dailySales: state.app.processedOrder,
   empPieChart: state.app.empPieChart,
-  employeeAndStaff: state.app.employeeAndStaff
+  employeeAndStaff: state.app.employeeAndStaff,
+  wipOrderCount: state.app.wipOrder
 });
 export default connect(mapStateToProps, {
   getUser,
@@ -332,5 +389,6 @@ export default connect(mapStateToProps, {
   getStaff,
   pieChartOrders,
   processedOrder,
-  updatePaymentStatus
+  updatePaymentStatus,
+  wipOrder
 })(Manager);

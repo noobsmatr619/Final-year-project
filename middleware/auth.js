@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { sendServerError } = require('./../utils/errors/serverError');
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config();
 const User = require('../Models/User');
 exports.protect = async (req, res, next) => {
   let token;

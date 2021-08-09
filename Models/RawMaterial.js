@@ -4,32 +4,36 @@ const rawMaterialSchema = new mongoose.Schema(
   {
     type: {
       type: String,
-      required: [true, "Please Add Type"],
+      required: [true, 'Please Add Type']
     },
     name: {
-      type: String,
+      type: String
     },
     count: {
       type: Number,
-      default: 1,
+      default: 1
+    },
+    price: {
+      type: Number,
+      default: 0
     },
     machine: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Machine",
-      required: true,
+      ref: 'Machine',
+      required: true
     },
     status: {
       type: Boolean,
-      default: false,
+      default: false
     },
     date: {
       type: Date,
-      default: Date.now,
-    },
+      default: Date.now
+    }
   },
   {
     toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
 

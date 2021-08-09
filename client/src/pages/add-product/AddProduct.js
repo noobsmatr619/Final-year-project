@@ -96,10 +96,9 @@ const Add = () => {
         description: description,
         machineId: machine
       };
-      alert(productData);
       axios
         .post(
-          'http://localhost:5000/api/v1/products/createProduct',
+          '/api/v1/products/createProduct',
           productData
         )
         .then((response) => {

@@ -98,6 +98,12 @@ class Stock extends Component {
           sortable: true,
           filter: true
         },
+        {
+          headerName: 'Price',
+          field: 'price',
+          sortable: true,
+          filter: true
+        },
         { headerName: 'Date', field: 'date', sortable: true, filter: true }
       ],
       totalProductsProducingColumns: [
@@ -125,14 +131,26 @@ class Stock extends Component {
           sortable: true,
           filter: true
         },
+        {
+          headerName: 'Price',
+          field: 'price',
+          sortable: true,
+          filter: true
+        },
 
         { headerName: 'Date', field: 'date', sortable: true, filter: true },
+        // {
+        //   headerName: 'Action',
+        //   minWidth: 150,
+        //   cellRenderer: reejectButtonRendrer,
+        //   editable: false,
+        //   colId: 'action'
+        // }
         {
-          headerName: 'Action',
-          minWidth: 150,
-          cellRenderer: reejectButtonRendrer,
-          editable: false,
-          colId: 'action'
+          headerName: 'Total Price',
+          field: 'total_price',
+          sortable: true,
+          filter: true
         }
       ],
       rawMaterials: [],
@@ -222,7 +240,7 @@ class Stock extends Component {
   };
 
   getConfirmedProducts = () => {
-    Axios.get(baseUrl + '/products/getProductsProduced', {
+    Axios.get(baseUrl + '/products/getProductsDone', {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
       }
@@ -234,9 +252,11 @@ class Stock extends Component {
           totalProductsProduced.push({
             id: product._id,
             count: product.count,
-            machine: product.machine.name,
-            product: product.product.name,
-            date: moment().format('llll', product.date)
+            machine: product.name,
+            product: product.name,
+            price: product.price,
+            date: moment().format('llll', product.date),
+            total_price: Number(product.count) * Number(product.price)
           });
         });
         this.setState({
@@ -264,6 +284,7 @@ class Stock extends Component {
               count: material.count,
               machine: material.machine.name,
               type: material.type,
+              price: material.price,
               date: moment().format('llll', material.date)
             });
           } else {
