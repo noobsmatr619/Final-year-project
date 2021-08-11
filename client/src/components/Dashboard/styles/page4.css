@@ -1,0 +1,32 @@
+.upper-left-page4 {
+  width: 98%;
+  height: 98%;
+  border: 1px solid black;
+  margin: 1%;
+}
+.row-page4 {
+  height: 80vh;
+  margin: 1%;
+}
+.center-30-page4 {
+  height: 40vh;
+  margin: 1%;
+  border: 1px solid;
+}
+.center-40-page4 {
+  height: 28vh;
+  border: 1px solid;
+  margin: 1%;
+}
+.center-part-upper {
+  width: 98%;
+  margin: 1%;
+  height: 96%;
+  border: 1px solid;
+}
+.upper-right-page4 {
+  width: 98%;
+  height: 96%;
+  border: 1px solid black;
+  margin: 1%;
+}
