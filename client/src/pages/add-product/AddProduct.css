@@ -1,0 +1,17 @@
+.bootstrap-timepicker-widget table tr:nth-child(3) > td:last-child a {
+  display: none !important;
+}
+
+.bootstrap-timepicker-widget table tr:nth-child(1) > td:last-child a {
+  display: none !important;
+}
+
+.input-error-color {
+  border-color: '#e63946' !important;
+}
+
+.error-color {
+  color: '#e63946' !important;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
