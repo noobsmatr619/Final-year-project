@@ -4,7 +4,7 @@ from pymongo import collection
 import requests
 import pymongo 
 from pymongo import MongoClient
-
+#mongo db connector
 cluster = MongoClient("mongodb+srv://admin:Plymouth.0410@dmc.7r25y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db=cluster["myFirstDatabase"]
 collection= db["machines"]
