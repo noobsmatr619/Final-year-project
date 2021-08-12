@@ -6,22 +6,27 @@ import * as Type from './types';
 import setAuthToken from '../utils/setAuthToken';
 
 export const LoadUser = (history) => async (dispatch) => {
-  if (localStorage.CRM_TOKEN) {
-    setAuthToken(localStorage.CRM_TOKEN);
-  }
-  try {
-    const res = await axios.get(baseUrl + '/auth/getMe');
-    dispatch({
-      type: Type.LOAD_USER,
-      payload: res.data.data
-    });
-  } catch (error) {
-    history.push('/auth');
+  const reseturl = history.location.pathname.slice(
+    0,
+    history.location.pathname.lastIndexOf('/')
+  );
+  if (reseturl != '/password/reset') {
+    if (localStorage.CRM_TOKEN) {
+      setAuthToken(localStorage.CRM_TOKEN);
+    }
+    try {
+      const res = await axios.get(baseUrl + '/auth/getMe');
+      dispatch({
+        type: Type.LOAD_USER,
+        payload: res.data.data
+      });
+    } catch (error) {
+      history.push('/auth');
 
-    console.log(error);
+      console.log(error);
+    }
   }
 };
-
 const moveUserAtStartRoute = async (history) => {
   try {
     const res = await axios.get(baseUrl + '/auth/getMe');
