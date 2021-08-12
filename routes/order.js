@@ -1,3 +1,4 @@
+//order routes to handle api 
 const express = require('express');
 const router = express.Router();
 const {
@@ -14,6 +15,8 @@ const {
   weeklyOrdersPrice,
   getAllProcessedOrders
 } = require('./../controllers/orders');
+// check for authentication else breaks due to protected routes security
+// alll the api to handle the routes exported later 
 const { protect } = require('./../middleware/auth');
 router.post('/placeMyOrder', protect, placeMyOrder);
 router.post('/updateOrderStatus', protect, updateOrderStatus);

@@ -6,7 +6,7 @@ import SignatureCanvas from 'react-signature-canvas';
 import DateTimePicker from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 import './Hse.css';
-
+//render all the forms on the health and safety side of the forms acess 
 import { Form, Button, Spinner } from 'react-bootstrap';
 const HealthSafetyForm = ({
   setaccidentForm,

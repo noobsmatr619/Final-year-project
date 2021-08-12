@@ -1,3 +1,4 @@
+// product js create prodcuct on the databse 
 let mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema(

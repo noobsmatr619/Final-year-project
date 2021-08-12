@@ -1,3 +1,4 @@
+//test data for tests 
 const createNewUser = {
     "_id": "5ff49215073e021e54403cc9",
     "email": "testUser1@test4.com",

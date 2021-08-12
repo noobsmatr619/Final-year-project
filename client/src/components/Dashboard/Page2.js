@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./../../pages/Header/Header";
 import { AgGridReact } from "ag-grid-react";
 import { Container, Col, Row } from "react-bootstrap";
+// staic component for usability test 
 class Page2 extends Component {
   constructor(props) {
     super(props);

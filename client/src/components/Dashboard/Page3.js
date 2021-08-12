@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "./../../pages/Header/Header";
 import { Container, Col, Row } from "react-bootstrap";
+// static page for showing to supervisor and usability test 
 class Page2 extends Component {
   render() {
     return (

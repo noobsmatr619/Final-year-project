@@ -16,3 +16,4 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+//config to main db to connect from .env make sure .env is nto uplaoded 

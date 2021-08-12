@@ -1,3 +1,4 @@
+//machine api routes 
 const express = require('express');
 const router = express.Router();
 const {
@@ -10,6 +11,7 @@ const {
   updateMachineTarget,
   updateMachineInformation
 } = require('./../controllers/admin/machine');
+//routes to handle machine apis 
 router.post('/addNewMachine', addNewMachine);
 router.get('/getAllMachines', getAllMachines);
 router.get('/getAllMachinesWithAnyStatus', getAllMachinesWithAnyStatus);

@@ -1,3 +1,4 @@
+//manager routes to handle manager actions calls 
 const express = require("express");
 const config = require("config");
 const bcrypt = require("bcryptjs");
@@ -60,6 +61,7 @@ router.post("/login", async (req, res) => {
         return res.status(500).send("Please check all the information is filled");
     }
 });
+// add a manager to application 
 router.post("/addmanager", async (req, res) => {
     let { email, password } = req.body;
 
@@ -86,6 +88,7 @@ router.post("/addmanager", async (req, res) => {
         return res.status(500).send("Please check all the information is filled");
     }
 });
+//classic routed coded to push manager user type to authentication 
 router.get("/", auth, verify.ismanager, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password");

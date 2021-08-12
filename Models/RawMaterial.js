@@ -1,3 +1,4 @@
+//create raw materials on the databse schema 
 let mongoose = require("mongoose");
 
 const rawMaterialSchema = new mongoose.Schema(

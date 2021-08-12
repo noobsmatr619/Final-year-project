@@ -3,6 +3,7 @@ import axios from 'axios';
 import Calendar from 'react-calendar';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+//manager view 
 import {
   getStaff,
   getEmployeeAndStaff,
@@ -26,7 +27,7 @@ import AddProjectModal from './components/AddProject/AddProjectModal';
 import AssignModal from './components/AssgnModal/AssignModal';
 import './Manager.css';
 import { baseUrl } from './../../baseUrl';
-
+//decaler states
 const Manager = ({
   getUser,
   employees,
@@ -60,6 +61,7 @@ const Manager = ({
     getAllOrders();
     getAllRawMaterialsPrices();
     getConfirmedProducts();
+    getGraphData();
   }, []);
   console.log(employees);
   // const { employees } = useSelector(({ app }) => ({
@@ -74,7 +76,8 @@ const Manager = ({
   const [doneOrders, setDoneOrders] = useState(0);
   const [wipOrders, setWipOrders] = useState(0);
   const [rawMaterialsPrice, setRawMaterialsPrice] = useState(0);
-
+  const [graph, setGraph] = useState('');
+//get all the order 
   const getAllOrders = async () => {
     try {
       const res = await axios.get(`${baseUrl}/orders/getAllProcessedOrders`);
@@ -86,7 +89,20 @@ const Manager = ({
       console.log(error);
     }
   };
-
+//data from the graph 
+  const getGraphData = async () => {
+    try {
+      const response = await axios.get(baseUrl + '/orders/pieChartOrders', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+        }
+      });
+      setGraph(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+//raw materials
   const getAllRawMaterialsPrices = async () => {
     try {
       const res = await axios.get(
@@ -98,7 +114,7 @@ const Manager = ({
       console.log(error);
     }
   };
-
+//confirms products 
   const getConfirmedProducts = () => {
     axios
       .get(baseUrl + '/products/getProductsDone', {
@@ -228,7 +244,7 @@ const Manager = ({
               </Row>
               <div className="d-flex justify-content-center  bg-light mt-5">
                 Weekly No of sales
-                <MyChart empPieChart={empPieChart}></MyChart>
+                <MyChart object={graph}></MyChart>
               </div>
             </Col>
             <Col md={3} sm={12}>

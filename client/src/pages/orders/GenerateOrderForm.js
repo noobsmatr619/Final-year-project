@@ -4,7 +4,8 @@ import axios from 'axios';
 import { baseUrl } from './../../baseUrl';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import Swal from 'sweetalert';
-
+//orer form to be rendered in fomrs page 
+//states
 class GenerateOrderForm extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +25,7 @@ class GenerateOrderForm extends Component {
 
     this.placeNewOrder = this.placeNewOrder.bind(this);
   }
+  //lis of emplyee so that all emplyee can acces it
   getAllEmployees = () => {
     axios
       .get(baseUrl + '/auth/getEmployeeAndStaff', {
@@ -70,27 +72,45 @@ class GenerateOrderForm extends Component {
   };
 
   placeNewOrder = (e) => {
-    this.setState({
-      isLoading: true
-    });
-    axios
-      .post(baseUrl + '/orders/placeMyOrder', this.state, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
-        }
-      })
-      .then((response) => {
-        this.setState({
-          isLoading: false
-        });
-        Swal('Order is Assigned');
-      })
-      .catch((error) => {
-        this.setState({
-          isError: true,
-          error: error.response.data.error
-        });
+    if (
+      this.state.product == '' ||
+      this.state.count == 0 ||
+      this.state.count < 0 ||
+      this.state.assignedTo == null ||
+      this.state.provider == ''
+    ) {
+      let message = '';
+      if (this.state.product === '') message += 'Product is required\n';
+      if (this.state.count == 0) message += 'Quantity is required\n';
+      if (this.state.count < 0) message += 'Quantity is not valid\n';
+      if (this.state.assignedTo == null) message += 'Assigned To is required\n';
+      if (this.state.provider == '') message += 'Provider is required\n';
+
+      Swal(`Please provide all required fields\n
+        ${message}`);
+    } else {
+      this.setState({
+        isLoading: true
       });
+      axios
+        .post(baseUrl + '/orders/placeMyOrder', this.state, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+          }
+        })
+        .then((response) => {
+          this.setState({
+            isLoading: false
+          });
+          Swal('Order is Assigned');
+        })
+        .catch((error) => {
+          this.setState({
+            isError: true,
+            error: error.response.data.error
+          });
+        });
+    }
   };
   componentDidMount() {
     this.getAllEmployees();
@@ -102,7 +122,9 @@ class GenerateOrderForm extends Component {
         <h1 className="text-center mt-3">Assing Order </h1>
         <Form>
           <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Label>Select products</Form.Label>
+            <Form.Label>
+              Select product<span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
               value={this.state.product}
               onChange={(e) => {
@@ -130,9 +152,11 @@ class GenerateOrderForm extends Component {
           </Form.Group>
 
           <Form.Group>
-            <Form.Label>Product Quantity</Form.Label>
+            <Form.Label>
+              Product Quantity<span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
-              type="text"
+              type="number"
               placeholder="Quantity"
               value={this.state.count}
               onChange={(e) => {
@@ -143,7 +167,10 @@ class GenerateOrderForm extends Component {
             />
           </Form.Group>
           <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Label>Select Employee To Assign Order</Form.Label>
+            <Form.Label>
+              Select Person To Assign a Order
+              <span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
               value={this.state.assignedTo}
               onChange={(e) => {
@@ -163,6 +190,10 @@ class GenerateOrderForm extends Component {
           </Form.Group>
 
           <Form.Group>
+            <Form.Label>
+              Buyer Name
+              <span style={{ color: 'red' }}>*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               data-testid="buyerName"

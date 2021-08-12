@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
-
+// static data for showing in for usabiloty test but later change to main 
 class ChartEx1 extends Component {
   constructor(props) {
     super(props);

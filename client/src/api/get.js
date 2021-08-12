@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "./baseUrl";
-
+//  get crm token 
 export const get = endPoint => {
   let token = "";
   let localtoken = localStorage.getItem("CRM_TOKEN");

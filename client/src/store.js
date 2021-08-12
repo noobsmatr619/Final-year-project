@@ -14,3 +14,5 @@ const store = createStore(
 );
 
 export default store;
+
+// Object-Relational Mapping Data Mapper pattern

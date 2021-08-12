@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Bar } from "react-chartjs-2";
-
+// set new graph dynamix data pulled in test 
 class ChartEx1 extends Component {
   constructor(props) {
     super(props);

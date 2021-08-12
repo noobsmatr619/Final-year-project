@@ -1,3 +1,4 @@
+//simple salary click handler 
 const express = require("express");
 const router = express.Router();
 const { paySalary, getSalaries } = require("./../controllers/salaries");

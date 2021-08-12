@@ -13,7 +13,7 @@ import { baseUrl } from './../../baseUrl';
 import { connect } from 'react-redux';
 import { OnlyLoadUser } from '../../actions/authActions';
 import { AgGridReact } from 'ag-grid-react';
-
+//empp viewer for users 
 import {
   Container,
   Row,
@@ -30,6 +30,7 @@ class Emp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      obj: {},
       columns: [
         {
           Header: 'Order Id',
@@ -137,7 +138,8 @@ class Emp extends Component {
       error: '',
       isLoading: false,
       show: false,
-      orders: []
+      orders: [],
+      empPieChart: {}
     };
     this.handleAddNewTask = this.handleAddNewTask.bind(this);
     this.markTaskComplete = this.markTaskComplete.bind(this);
@@ -293,6 +295,7 @@ class Emp extends Component {
         });
       });
   };
+
   handleAddNewTask = (e) => {
     const { task } = this.state;
     if (task == '') {
@@ -325,6 +328,7 @@ class Emp extends Component {
       });
   };
   componentDidMount() {
+    this.getGraphData();
     this.getAllTasks();
     this.getMe();
     this.getMyOrders();
@@ -332,6 +336,22 @@ class Emp extends Component {
     this.props.plannedOrder();
     this.props.wipOrder();
   }
+
+  getGraphData = async () => {
+    try {
+      const response = await axios.get(baseUrl + '/orders/pieChartOrders', {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('CRM_TOKEN')
+        }
+      });
+      this.setState({
+        obj: response.data.data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
     return (
       <div>
@@ -504,7 +524,7 @@ class Emp extends Component {
           </Row>
           <Row>
             <Col md={12} sm={12} className="chart">
-              <MyChart empPieChart={this.props.empPieChart}></MyChart>
+              <MyChart object={this.state.obj}></MyChart>
             </Col>
           </Row>
         </Container>

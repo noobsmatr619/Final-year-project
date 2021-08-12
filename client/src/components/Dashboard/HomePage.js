@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "./../../pages/Header/Header";
+//ignore when move to mvc 
 class HomePage extends Component {
   render() {
     return (

@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import * as Type from './types';
 import { get, post, put, deleteApi } from '../api';
+// get all employee orders 
 export const getEmployeeOrders = () => async (dispatch) => {
   try {
     const res = await get(`/orders/getEmployeeOrders`);
@@ -12,6 +13,7 @@ export const getEmployeeOrders = () => async (dispatch) => {
     toast.error(error.response.data.error);
   }
 };
+// emplyee orders integrated in staf page 
 export const getEmployeeOrdersForStaffPage = () => async (dispatch) => {
   try {
     const res = await get(`/orders/getEmployeeOrdersForStaffPage`);
@@ -23,6 +25,7 @@ export const getEmployeeOrdersForStaffPage = () => async (dispatch) => {
     toast.error(error.response.data.error);
   }
 };
+//get all staffs 
 export const getStaff = () => async (dispatch) => {
   try {
     const res = await get(`/auth/getStaff`);
@@ -34,6 +37,7 @@ export const getStaff = () => async (dispatch) => {
     toast.error(error.response.data.error);
   }
 };
+//get emplyee connected to staff 
 export const getEmployeeAndStaff = () => async (dispatch) => {
   try {
     const res = await get(`/auth/getEmployeeAndStaff`);
@@ -45,6 +49,7 @@ export const getEmployeeAndStaff = () => async (dispatch) => {
     toast.error(error.response.data.error);
   }
 };
+// update payment status 
 export const updatePaymentStatus = (state) => async (dispatch) => {
   post('/auth/updatePaymentStatus', { id: state })
     .then((response) => {

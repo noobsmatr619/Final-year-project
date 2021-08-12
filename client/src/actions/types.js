@@ -40,7 +40,7 @@ export const YEARLY_ORDER_PRICES = 'YEARLY_ORDER_PRICES';
 export const MONTHLY_ORDER_PRICES = 'MONTHLY_ORDERS_PRICE';
 export const WEEKLY_ORDER_PRICES = 'WEEKLY_ORDERS_PRICE';
 /**
- *
+ *porject types and accidents and location 
  */
 export const COMPLETED_PROJECTS = 'COMPLETED_PROJECTS';
 export const GET_ACCIDENT = 'GET_ACCIDENT';

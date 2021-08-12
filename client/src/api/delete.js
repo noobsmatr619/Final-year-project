@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "./baseUrl";
-
+//endpoint for deleting api crm token so that later can be used to log out and stop user backing to main screen
 export const deleteApi = endPoint => {
   let token = "";
   let localtoken = localStorage.getItem("CRM_TOKEN");

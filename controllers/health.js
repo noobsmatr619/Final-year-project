@@ -16,7 +16,7 @@ const { sendServerError } = require('./../utils/errors/serverError');
 
 /**
  * Test route for Bar code implementation**/
-
+//create accident controller 
 exports.createAccident = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -32,7 +32,11 @@ exports.createAccident = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -42,7 +46,11 @@ exports.getAccident = async (req, res, next) => {
     res.status(200).json({ data: get });
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
 
@@ -81,9 +89,51 @@ exports.getlLocationAccident = async (req, res, next) => {
     Asyn.then(() => res.status(200).json({ data: data }));
   } catch (error) {
     console.log(error);
-    return sendServerError(res, 500, "Please check all the information is filled");
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
   }
 };
+
+exports.getSingleHealth = async (req, res, next) => {
+  try {
+    const health = await Health.findOne({ _id: req.params.id });
+    if (!health) {
+      return sendServerError(res, 404, 'Record not found');
+    }
+    res.status(200).json(health);
+  } catch (error) {
+    console.log(error);
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
+  }
+};
+
+exports.updateSingleHealth = async (req, res, next) => {
+  try {
+    const health = await Health.findOne({ _id: req.params.id });
+    if (!health) {
+      return sendServerError(res, 404, 'Record not found');
+    }
+    req.body.location = req.body.Location;
+    await Health.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    });
+    res.status(200).json();
+  } catch (error) {
+    return sendServerError(
+      res,
+      500,
+      'Please check all the information is filled'
+    );
+  }
+};
+
 //@desc Create Product
 //@route POST /api/v1/products/createProduct
 //@access private

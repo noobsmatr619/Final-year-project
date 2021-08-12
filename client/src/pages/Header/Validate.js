@@ -14,3 +14,4 @@ const Validate = () => {
 };
 
 export default Validate;
+//validates suer so sthat the user cant get back to main screen after loggin in 

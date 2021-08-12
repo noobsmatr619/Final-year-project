@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./../../pages/Header/Header";
 import { Container, Col, Row } from "react-bootstrap";
 import "./styles/page4.css";
+//static data to showcase materials to user for testing purpose
 class Page2 extends Component {
   render() {
     return (

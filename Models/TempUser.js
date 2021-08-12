@@ -1,3 +1,4 @@
+//temporary user to make temp user on the database mainly for test data 
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(

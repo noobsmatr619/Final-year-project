@@ -2,7 +2,7 @@ import { baseUrl } from '../baseUrl';
 import _ from 'lodash';
 import axios from 'axios';
 import * as Type from './types';
-
+//create new projects for the team/users 
 export const createProject = (name, des, date) => async (dispatch) => {
   try {
     const res = await axios.post(
@@ -21,6 +21,7 @@ export const createProject = (name, des, date) => async (dispatch) => {
     return false;
   }
 };
+// this will assign to team and uers dependently 
 export const assignProject = (id, teamId) => async (dispatch) => {
   try {
     const res = await axios.post(
@@ -39,7 +40,7 @@ export const assignProject = (id, teamId) => async (dispatch) => {
     return false;
   }
 };
-
+// sends a list of project to be choosen from for all the users to see 
 export const getAllProject = () => async (dispatch) => {
   try {
     const projects = await axios.get(`${baseUrl}/projects/getAllProjects`, {
@@ -52,9 +53,9 @@ export const getAllProject = () => async (dispatch) => {
       payload: projects.data.data
     });
   } catch (error) {
-    // debugger;
+    // debugger; to debug routes 
     const token = localStorage.getItem('CRM_TOKEN');
-    // console.log(token);
+    // console.log(token); check fro tokens 
     // debugger;
     console.log(error);
   }

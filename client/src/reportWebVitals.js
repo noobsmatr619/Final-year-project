@@ -11,3 +11,5 @@ const reportWebVitals = onPerfEntry => {
 };
 
 export default reportWebVitals;
+
+//adde by scripts when creating a react app user to ananlyse web vitals 

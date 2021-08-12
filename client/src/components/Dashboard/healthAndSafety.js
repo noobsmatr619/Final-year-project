@@ -11,6 +11,7 @@ import ButtomContainer from './../../pages/health-safety/Buttom-Container';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Container, Col, Row } from 'react-bootstrap';
+// create health and safety component so that can be pulled into the view
 const HealthSafety = () => {
   const dispatch = useDispatch();
   const [accidentForm, setaccidentForm] = useState({
@@ -32,6 +33,7 @@ const HealthSafety = () => {
     };
     runActions();
   }, []);
+  //make sure submit handler is async else it breaks as data loads after laoding page 
   const submitHandler = async (e) => {
     e.preventDefault();
     const {
@@ -87,6 +89,7 @@ const HealthSafety = () => {
       setisLoading(false);
     }
   };
+  // humanoid through svg will be created below
   return (
     <>
       <Header />

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
-
+// different data for different views 
 class ChartEx2 extends Component {
   constructor(props) {
     super(props);

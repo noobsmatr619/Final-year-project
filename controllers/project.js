@@ -1,6 +1,6 @@
 const Project = require('../Models/Project');
 const { sendServerError } = require('./../utils/errors/serverError');
-
+//create project with correct error code 
 exports.createProject = async (req, res, next) => {
   const { project, description, dueDate } = req.body;
   //   const employee = req.user.id;
@@ -18,6 +18,7 @@ exports.createProject = async (req, res, next) => {
     return sendServerError(res, 500, "Please check all the information is filled");
   }
 };
+//get all products 
 exports.getAllProjects = async (req, res, next) => {
   try {
     const project = await Project.find({}).sort({

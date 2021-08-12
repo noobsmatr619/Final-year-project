@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { baseUrl } from './../../baseUrl';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
-
+// machine list component to show all the macihnes 
 const MachinesList = () => {
   const [machines, setMachines] = useState([]);
   const [isLoadingMachines, setLoadingMachines] = useState(true);

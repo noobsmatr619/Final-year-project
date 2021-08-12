@@ -1,3 +1,4 @@
+//createone message on the databse through this schema, this encrypts the messages
 const mongoose = require("mongoose");
 const MessageSchema = new mongoose.Schema({
   text: {

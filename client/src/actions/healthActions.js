@@ -1,6 +1,6 @@
 import * as Type from './types';
 import { get, post, put, deleteApi } from '../api';
-
+//generation of new accidents 
 export const createAccident = (form) => async (dispatch) => {
   try {
     const res = await post(`/health/createAccident`, form);
@@ -8,6 +8,7 @@ export const createAccident = (form) => async (dispatch) => {
     console.log(error);
   }
 };
+// get all the accidents 
 export const getAccident = (form) => async (dispatch) => {
   try {
     const res = await get(`/health/getAccident`);

@@ -1,3 +1,4 @@
+//routes for creating user through api 
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const config = require("config");
@@ -19,6 +20,7 @@ router.get("/", auth, async (req, res) => {
     return res.status(500).json({ msg: "Please check all the information is filled" });
   }
 });
+// get all user s
 router.get("/all", auth, async (req, res) => {
   try {
     const user = await User.find({ admin: false }).select("-password");
@@ -28,6 +30,7 @@ router.get("/all", auth, async (req, res) => {
     return res.status(500).json({ msg: "Please check all the information is filled" });
   }
 });
+// make a user admin 
 router.post("/addadmin", async (req, res) => {
   let { email, password } = req.body;
 
@@ -100,7 +103,7 @@ router.post("/signup", async (req, res) => {
     return res.status(500).send("Please check all the information is filled");
   }
 });
-
+//reset user password, make sure smtp is called 
 router.post("/reset-password", (req, res) => {
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {

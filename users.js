@@ -1,3 +1,4 @@
+//make server users for security test 
 const users = [];
 
 const addUser = ({ id, name, profile }) => {

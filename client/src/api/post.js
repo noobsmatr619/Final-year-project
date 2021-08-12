@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from './baseUrl';
-
+// post data , overriding into new post HOC
 export const post = (endPoint, data, content = 'application/json') => {
   let token = '';
   let localtoken = localStorage.getItem('CRM_TOKEN');

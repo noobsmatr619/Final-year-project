@@ -22,3 +22,5 @@ const mapStateToProps = state => ({
   role: state.app.role,
 });
 export default connect(mapStateToProps)(PrivateRoute);
+
+//create private protected routes specific to usre type 

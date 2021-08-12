@@ -17,7 +17,7 @@ const colors = {
     8: 'grey',
     0: 'grey'
   };
-
+//reportd of each machiens 
 const Reports = () => {
   const [machines, setMachines] = useState([]);
   const [chartData, setChartData] = useState({});
@@ -43,7 +43,7 @@ const Reports = () => {
     ],
   },
 };
-  
+  //list of all machine s
 const getAllMachines = async () => {
     try {
       const response = await Axios.get(

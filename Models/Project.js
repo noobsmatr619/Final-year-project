@@ -1,3 +1,4 @@
+//create project schema to cereate produtc on the database, take care on the required fields 
 const mongoose = require("mongoose");
 const ProjectSchema = new mongoose.Schema(
   {

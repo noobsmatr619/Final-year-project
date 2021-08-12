@@ -88,13 +88,11 @@ exports.getAllProcessedOrders = async (req, res, next) => {
       0
     );
     console.log(orders);
-    res
-      .status(200)
-      .json({
-        orders: orders,
-        dailyExpense: dailyExpense,
-        wipOrders: wipOrders
-      });
+    res.status(200).json({
+      orders: orders,
+      dailyExpense: dailyExpense,
+      wipOrders: wipOrders
+    });
   } catch (error) {
     console.log(error);
     return sendServerError(
@@ -141,6 +139,8 @@ exports.wipOrder = async (req, res, next) => {
 exports.pieChartOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({ status: 3 });
+    // console.log('pieChartOrders');
+    // console.log(orders);
     const week = {
       monday: 0,
       tuesday: 0,
@@ -151,25 +151,24 @@ exports.pieChartOrders = async (req, res, next) => {
       sunday: 0
     };
     orders.forEach((order) => {
-      if (moment(order.date, 'MM-DD-YYYY').week() == moment().format('w')) {
-        if (moment(order.date).format('dddd') == 'Monday') {
-          week.monday = week.monday + 1;
-        } else if (moment(order.date).format('dddd') == 'Tuesday') {
-          week.tuesday = week.tuesday + 1;
-        } else if (moment(order.date).format('dddd') == 'Wednesday') {
-          week.wednesday = week.wednesday + 1;
-        } else if (moment(order.date).format('dddd') == 'Thursday') {
-          week.thursday = week.thursday + 1;
-        } else if (moment(order.date).format('dddd') == 'Friday') {
-          week.friday = week.friday + 1;
-        } else if (moment(order.date).format('dddd') == 'Saturday') {
-          week.saturday = week.saturday + 1;
-        } else if (moment(order.date).format('dddd') == 'Sunday') {
-          week.sunday = week.sunday + 1;
-        }
+      if (moment(order.date).format('dddd') == 'Monday') {
+        week.monday = week.monday + 1;
+      } else if (moment(order.date).format('dddd') == 'Tuesday') {
+        week.tuesday = week.tuesday + 1;
+      } else if (moment(order.date).format('dddd') == 'Wednesday') {
+        week.wednesday = week.wednesday + 1;
+      } else if (moment(order.date).format('dddd') == 'Thursday') {
+        week.thursday = week.thursday + 1;
+      } else if (moment(order.date).format('dddd') == 'Friday') {
+        week.friday = week.friday + 1;
+      } else if (moment(order.date).format('dddd') == 'Saturday') {
+        week.saturday = week.saturday + 1;
+      } else if (moment(order.date).format('dddd') == 'Sunday') {
+        week.sunday = week.sunday + 1;
       }
     });
-
+    // console.log('week');
+    // console.log(week);
     res.status(200).json({
       data: week
     });
@@ -182,6 +181,7 @@ exports.pieChartOrders = async (req, res, next) => {
     );
   }
 };
+//check for monthly order and hten create 
 exports.monthlyOrdersPrice = async (req, res, next) => {
   try {
     const orders = await Order.find({ status: 3 });
@@ -206,6 +206,7 @@ exports.monthlyOrdersPrice = async (req, res, next) => {
     );
   }
 };
+// create yearly orders 
 exports.yearlyOrdersPrice = async (req, res, next) => {
   try {
     const orders = await Order.find({ status: 3 });

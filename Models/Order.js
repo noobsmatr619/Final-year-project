@@ -1,3 +1,4 @@
+// order schema to create orders in databse
 let mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema(
   {

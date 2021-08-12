@@ -1,3 +1,4 @@
+//teams scheam
 const mongoose = require("mongoose");
 const TeamSchema = new mongoose.Schema(
   {

@@ -36,8 +36,8 @@ const teams = require('./routes/teams');
 const salaries = require('./routes/salaries');
 
 const PORT = process.env.PORT || 5000;
-cloudinaryConfig();
-connectDB();
+cloudinaryConfig(); //cloudinary cofig from config file 
+connectDB();//connect to server 
 app.use(express.json());
 app.use(cors());
 //cookie parser
@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
   }
   interval = setInterval(() => getApiAndEmit(socket), 1000);
   socket.on('disconnect', () => {
-    console.log('Client disconnected');
+    console.log('Client disconnected'); //tack when connected and disconnected 
     clearInterval(interval);
   });
 });

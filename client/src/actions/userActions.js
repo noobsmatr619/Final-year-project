@@ -1,7 +1,7 @@
 import { baseUrl } from '../baseUrl';
 import axios from 'axios';
 import * as Type from './types';
-
+//get user for actions 
 export const getUser = () => async (dispatch) => {
   try {
     // debugger;

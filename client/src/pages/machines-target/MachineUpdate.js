@@ -5,6 +5,7 @@ import Axios from 'axios';
 import { baseUrl } from './../../baseUrl';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
+//update each machine list target through socket io
 const MachineUpdate = ({ history, match }) => {
   const [machine, setMachine] = useState([]);
   const [id, setId] = useState('');
@@ -12,7 +13,7 @@ const MachineUpdate = ({ history, match }) => {
   const [model, setModel] = useState('');
   const [target, setTarget] = useState('');
   const [isLoadingMachine, setLoadingMachine] = useState(true);
-
+//get asingle machine 
   const getSingleMachine = async () => {
     try {
       const response = await Axios.get(

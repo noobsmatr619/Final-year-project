@@ -88,3 +88,4 @@ export default [
         'end': new Date(2015, 3, 22, 2, 0, 0)
     }
 ]
+// lost fo event s

@@ -17,3 +17,4 @@ export default class App extends React.Component {
     );
   }
 }
+// the loading animation 

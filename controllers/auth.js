@@ -3,6 +3,9 @@ const TempUser = require('../Models/TempUser');
 const bcrypt = require('bcryptjs');
 const { sendServerError } = require('./../utils/errors/serverError');
 const asyncHandler = require('../middleware/async');
+const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
+
 /*
 
 For Registration of a user
@@ -386,4 +389,87 @@ exports.searchUsers = asyncHandler(async (req, res, next) => {
       'Please check all the information is filled'
     );
   }
+});
+
+// Forgot Password   =>  /password/forgot
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return sendServerError(res, 404, 'User not found with this email');
+  }
+
+  // Get reset token
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  // Local forgot password url
+  const resetUrl = `http://localhost:3000/password/reset/${resetToken}`;
+
+  // Create reset password url
+  // const resetUrl = `${req.protocol}://${req.get(
+  //   'host'
+  // )}/password/reset/${resetToken}`;
+
+  const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'DMC Password Recovery',
+      message
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `Email sent to: ${user.email}`
+    });
+  } catch (error) {
+    console.log(error);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+    return sendServerError(res, 500, error.message);
+  }
+});
+
+// Reset Password   =>  /password/reset/:token
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+  // Hash URL token
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    return sendServerError(
+      res,
+      400,
+      'Password reset token is invalid or has been expired'
+    );
+  }
+
+  if (req.body.password !== req.body.confirmPassword) {
+    return sendServerError(res, 400, 'Password does not match');
+  }
+
+  // Setup new password
+  user.password = req.body.password;
+
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: `Your password successfully changed`
+  });
 });

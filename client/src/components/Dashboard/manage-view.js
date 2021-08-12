@@ -4,6 +4,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import "./styles/page4.css";
 import AgGridLayout from "./layouts/AgGridLayout";
 import ChartLayout from "./layouts/ChartLayout";
+// static data made for usablity test 
 class Page2 extends Component {
   constructor(props) {
     super(props);

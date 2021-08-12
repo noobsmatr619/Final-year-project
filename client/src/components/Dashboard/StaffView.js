@@ -4,6 +4,7 @@ import { Container, Col, Row } from "react-bootstrap";
 import AgGridLayout from "./layouts/AgGridLayout";
 import ChartLayout from "./layouts/ChartLayout";
 import "./styles/page5.css";
+// static view for usability test 
 class Page2 extends Component {
   render() {
     return (

@@ -18,7 +18,7 @@ router.get("/", auth, async (req, res) => {
         return res.status(500).json({ msg: "Please check all the information is filled" });
     }
 });
-// Route admin route
+// Route admin route login
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -60,6 +60,7 @@ router.post("/login", async (req, res) => {
         return res.status(500).send("Please check all the information is filled");
     }
 });
+// Route admin route to add admin 
 router.post("/addadmin", async (req, res) => {
     let { email, password } = req.body;
 
@@ -86,6 +87,7 @@ router.post("/addadmin", async (req, res) => {
         return res.status(500).send("Please check all the information is filled");
     }
 });
+// Route admin route classic push to browser history for authentication to cehck user type is admin 
 router.get("/", auth, verify.isAdmin, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password");

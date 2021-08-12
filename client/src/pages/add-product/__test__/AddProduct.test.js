@@ -6,7 +6,7 @@ describe('AddProduct component test cases', () => {
   test('renders without crashing', () => {
     render(<AddProduct />);
   });
-
+//check if the reders crashes or not and hte required fields are visible 
   test('should product name have visible', () => {
     render(<AddProduct />);
     const productName = screen.getByTestId('name');

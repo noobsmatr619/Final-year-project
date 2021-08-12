@@ -51,6 +51,7 @@ const Staff = () => {
     //     Swal("error in fetching teams");
     //   });
   });
+  //update actions 
   const updateToWIP = async (event, data) => {
     // const orderStatus = event.target.value;
     const id = data;

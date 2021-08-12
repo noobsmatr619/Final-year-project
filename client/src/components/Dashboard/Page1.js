@@ -58,7 +58,7 @@ function approveAsEmployee(params) {
 
   return eGui;
 }
-
+// admin contained named as page 1 as the first creation 
 class Admin extends Component {
   constructor(props) {
     super(props);

@@ -7,3 +7,4 @@ test('renders without crashing', () => {
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
+// main test  on the app componen the main entry poin to the application so that in reders without brekaing 

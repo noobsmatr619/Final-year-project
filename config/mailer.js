@@ -14,3 +14,4 @@ var transporter = nodemailer.createTransport({
 });
 
 module.exports = transporter;
+// mailer for resettuing password later tts services were made 

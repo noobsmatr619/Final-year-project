@@ -1,3 +1,4 @@
+//salary schema on databse 
 const mongoose = require("mongoose");
 const SalarySchema = new mongoose.Schema(
   {

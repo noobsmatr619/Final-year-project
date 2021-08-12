@@ -9,6 +9,8 @@ export let SessionState= ({ reducer, initialState, children }) => (
   
   export const useStateValue = () => useContext(SessionContext);
 
+  // save all the session state so can be grabbed later 
+
 
 
 

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import * as Type from './types';
 import setAuthToken from '../utils/setAuthToken';
-
+// loads user and checks if token exists 
 export const LoadUser = (history) => async (dispatch) => {
   if (localStorage.CRM_TOKEN) {
     setAuthToken(localStorage.CRM_TOKEN);
@@ -21,7 +21,7 @@ export const LoadUser = (history) => async (dispatch) => {
     console.log(error);
   }
 };
-
+// route the user according to user type 
 const moveUserAtStartRoute = async (history) => {
   try {
     const res = await axios.get(baseUrl + '/auth/getMe');
@@ -42,7 +42,7 @@ const moveUserAtStartRoute = async (history) => {
     return true;
   }
 };
-
+// load the user that is currently accessing 
 export const OnlyLoadUser = () => async (dispatch) => {
   if (localStorage.CRM_TOKEN) {
     setAuthToken(localStorage.CRM_TOKEN);
@@ -57,6 +57,7 @@ export const OnlyLoadUser = () => async (dispatch) => {
     console.log(error);
   }
 };
+// login user 
 export const loginUser = (form, history) => async (dispatch) => {
   axios
     .post(baseUrl + '/auth/login', form)
@@ -72,6 +73,7 @@ export const loginUser = (form, history) => async (dispatch) => {
       toast.error(error.response.data.error);
     });
 };
+// register new user 
 export const registerUser = (state, history) => async (dispatch) => {
   axios
     .post(baseUrl + '/auth/registerUser', state)
@@ -80,7 +82,7 @@ export const registerUser = (state, history) => async (dispatch) => {
         type: Type.REGISTER_USER,
         payload: response.data
       });
-      toast.success('Register Succesfully');
+      toast.success('Register Successfully');
       dispatch(LoadUser(history));
       moveUserAtStartRoute(history);
     })

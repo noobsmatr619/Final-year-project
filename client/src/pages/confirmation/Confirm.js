@@ -14,7 +14,7 @@ import {
   ProgressBar
 } from 'react-bootstrap';
 import { AgGridReact } from 'ag-grid-react';
-
+//confirmation on products 
 class Confirm extends Component {
   constructor(props) {
     super(props);

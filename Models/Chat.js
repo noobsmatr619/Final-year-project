@@ -1,3 +1,4 @@
+//shcema to create chat in the database 
 const mongoose = require("mongoose");
 const Message = require("./Message");
 const ChatSchema = new mongoose.Schema(

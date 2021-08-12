@@ -4,3 +4,4 @@ exports.sendServerError = (res, statusCode, error) => {
     error: error,
   });
 };
+//sends server error

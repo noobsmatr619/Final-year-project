@@ -28,6 +28,7 @@ const Home = React.lazy(() => import('./components/Dashboard/HomePage'));
 const HealthSafety = React.lazy(() =>
   import('./components/Dashboard/healthAndSafety')
 );
+//routes to different pages 
 const Admin = React.lazy(() => import('./components/Dashboard/Page1'));
 const Page2 = React.lazy(() => import('./components/Dashboard/Page2'));
 const Page3 = React.lazy(() => import('./components/Dashboard/Page3'));
@@ -40,9 +41,18 @@ const ChartEx3 = React.lazy(() => import('./components/Dashboard/Chart3'));
 //Authentication
 
 const Auth = React.lazy(() => import('./components/Auth/Auth'));
+const ForgotPassword = React.lazy(() =>
+  import('./components/Auth/ForgotPassword')
+);
+const NewForgotPassword = React.lazy(() =>
+  import('./components/Auth/NewForgotPassword')
+);
 const Loading = React.lazy(() => import('./utils/Loader'));
 
 //user views
+const AccidentProne = React.lazy(() =>
+  import('./pages/health-safety/AccidentProne')
+);
 const Reports = React.lazy(() => import('./pages/reports/Reports'));
 const Stock = React.lazy(() => import('./pages/Stock/Stock'));
 const Chat = React.lazy(() => import('./pages/chat/Chat'));
@@ -150,6 +160,13 @@ function App() {
             {/* <Route exact path='/ChartEx2' component={ChartEx2} /> */}
             {/* <Route exact path='/ChartEx3' component={ChartEx3} /> */}
             <Route exact path="/auth" component={Auth} />
+            <Route exact path="/forgotpassword" component={ForgotPassword} />
+            <Route
+              exact
+              path="/password/reset/:token"
+              component={NewForgotPassword}
+            />
+            <Route exact path="/accident/prone/edit/:id" component={AccidentProne} />
             <Route exact path="/health-safety" component={HealthSafety} />
             {/* <Route exact path='/loading' component={Loading} /> */}
             <Route exact path="/reports" component={Reports} />

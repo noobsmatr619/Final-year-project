@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./../../pages/Header/Header";
 import { Container, Col, Row } from "react-bootstrap";
 import "./styles/page6.css";
+//showing user the wireframe
 class Page2 extends Component {
   render() {
     return (

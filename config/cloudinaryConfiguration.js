@@ -17,3 +17,4 @@ const cloudinaryConfig = async () => {
   }
 };
 module.exports = { cloudinaryConfig, cloudinary };
+// cloudinary config to crea and upload cloud images 

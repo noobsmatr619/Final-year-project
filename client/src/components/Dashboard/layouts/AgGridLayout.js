@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { AgGridReact } from "ag-grid-react";
-
+//setting admin data to crunch in to agrid static data make sure to change the path after dynamic data is brought
 class Admin extends Component {
   constructor(props) {
     super(props);

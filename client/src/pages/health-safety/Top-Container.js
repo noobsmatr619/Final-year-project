@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table-6';
 import { Button } from 'react-bootstrap';
+import { Redirect, Link } from 'react-router-dom';
+//top container to show all the 3 times same reocruing lcoation accidents 
 class TopContainer extends Component {
   constructor(props) {
     super(props);
@@ -39,14 +41,15 @@ class TopContainer extends Component {
             console.log(row);
             return (
               <>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={async (e) => {
-                    console.log(row?.original._id);
+                <Link
+                  to={{
+                    pathname: `/accident/prone/edit/${row?.original._id}`,
+                    state: {
+                      title: 'Accident Prone Areas'
+                    }
                   }}>
                   Edit
-                </Button>{' '}
+                </Link>{' '}
               </>
             );
           }

@@ -1,3 +1,4 @@
+//multer upload file used by cloudinary , remember takes only one image 
 const multer = require('multer');
 const { cloudinary } = require('./config/cloudinaryConfiguration');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');

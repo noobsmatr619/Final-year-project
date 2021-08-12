@@ -1,3 +1,5 @@
+//shcema to create health  in the database 
+
 const mongoose = require('mongoose');
 const HealthSchema = new mongoose.Schema({
   Injury: {

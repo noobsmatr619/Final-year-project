@@ -1,3 +1,4 @@
+//chat component for chatting 
 import React, { useState, useEffect } from 'react';
 import Nav from '../Header/Header';
 import { Container } from 'react-bootstrap';
@@ -15,8 +16,9 @@ import { baseUrl, baseFileUrl } from './../../baseUrl';
 let chatSender = null;
 let chatReciever = null;
 let activeChat = null;
-// const socket = io('http://localhost:5000');
-const socket = io('https://dmcerp.herokuapp.com');
+const socket = io('http://localhost:5000');
+// const socket = io('https://dmcerp.herokuapp.com'); 
+//interchangable between local and prouction on git 
 const Chat = (props) => {
   const [myChats, setmyChats] = useState([]);
   const [userChat, setuserChat] = useState([]);

@@ -1,3 +1,5 @@
+//form control componennt to render fo rusers to add products to the system 
+
 import React, { useState, useEffect, Fragment } from 'react';
 import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
@@ -54,38 +56,36 @@ const Add = () => {
   }, []);
   const handleAdd = (e) => {
     e.preventDefault();
-    // console.log({
-    //   name,
-    //   operatorNo,
-    //   image,
-    //   category,
-    //   price,
-    //   duration,
-    //   description,
-    //   rawMaterial,
-    //   machine
-    // });
     if (
-      (name == '' ||
-        operatorNo === null ||
-        image == '' ||
-        category == '' ||
-        price == '' ||
-        description == '',
-      machine == '')
+      name == '' ||
+      operatorNo === null ||
+      category == '' ||
+      price == '' ||
+      description == '' ||
+      rawMaterial == '' ||
+      machine == '' ||
+      price <= 0 ||
+      operatorNo < 0
     ) {
-      Swal('please provid all required fields');
+      let message = '';
+      if (name === '') message += 'Name is required\n';
+      if (operatorNo === null) message += 'Operator number is required\n';
+      if (category === '') message += 'Category is required\n';
+      if (price === '') message += 'Price is required\n';
+      if (description === '') message += 'Description is required\n';
+      if (rawMaterial == '') message += 'Raw Material is required\n';
+      if (machine === '') message += 'Machine is required\n';
+      if (price <= 0) {
+        message += 'Price is not valid\n';
+      }
+      if (operatorNo < 0) {
+        message += 'Operator no is not valid\n';
+      }
+      Swal(`
+      Please provide all required fields\n
+      ${message}
+      `);
     } else {
-      // let productData = new FormData();
-      // productData.append('name', name);
-      // productData.append('operatorNo', operatorNo);
-      // productData.append('duration', duration);
-      // productData.append('category', category);
-      // productData.append('price', price);
-      // productData.append('rawMaterialsId', rawMaterial);
-      // productData.append('description', description);
-      // productData.append('machineId', machine);
-      // console.log(productData);
       const productData = {
         name: name,
         operatorNo: operatorNo,
@@ -97,10 +97,7 @@ const Add = () => {
         machineId: machine
       };
       axios
-        .post(
-          '/api/v1/products/createProduct',
-          productData
-        )
+        .post('/api/v1/products/createProduct', productData)
         .then((response) => {
           Swal(response.data.message);
         })
@@ -114,7 +111,9 @@ const Add = () => {
       <h1 className="mt-3 text-center">Add Products</h1>
       <Form onSubmit={handleAdd}>
         <Form.Group>
-          <Form.Label>Name</Form.Label>
+          <Form.Label>
+            Name <span style={{ color: 'red' }}>*</span>
+          </Form.Label>
           <Form.Control
             data-testid="name"
             type="text"
@@ -131,7 +130,9 @@ const Add = () => {
           />
         </Form.Group> */}
         <Form.Group>
-          <Form.Label>Category</Form.Label>
+          <Form.Label>
+            Category<span style={{ color: 'red' }}>*</span>
+          </Form.Label>
           <Form.Control
             data-testid="category"
             type="text"
@@ -141,12 +142,15 @@ const Add = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Operator No.</Form.Label>
+          <Form.Label>
+            Operator No <span style={{ color: 'red' }}>*</span>
+          </Form.Label>
           <Form.Control
             type="number"
             value={operatorNo}
             onChange={(e) => setoperatorNo(e.target.value)}
-            placeholder="Name..."
+            placeholder="Operator No"
+            min="1"
           />
         </Form.Group>
         <Form.Group>
@@ -163,16 +167,21 @@ const Add = () => {
           </MuiPickersUtilsProvider>
         </Form.Group>
         <Form.Group>
-          <Form.Label>price</Form.Label>
+          <Form.Label>
+            Price <span style={{ color: 'red' }}>*</span>
+          </Form.Label>
           <Form.Control
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            placeholder="Name..."
+            placeholder="Price..."
+            min="1"
           />
         </Form.Group>
         <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Textarea</Form.Label>
+          <Form.Label>
+            Description <span style={{ color: 'red' }}>*</span>
+          </Form.Label>
           <Form.Control
             as="textarea"
             value={description}
@@ -181,7 +190,9 @@ const Add = () => {
           />
         </Form.Group>
         <Form.Group controlId="exampleForm.SelectCustom">
-          <Form.Label>Select RawMaterial</Form.Label>
+          <Form.Label>
+            Select Raw Material <span style={{ color: 'red' }}>*</span>
+          </Form.Label>
           <Form.Control
             as="select"
             custom
@@ -198,7 +209,9 @@ const Add = () => {
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="exampleForm.SelectCustom">
-          <Form.Label>Select Machine</Form.Label>
+          <Form.Label>
+            Select Machine <span style={{ color: 'red' }}>*</span>
+          </Form.Label>
           <Form.Control
             as="select"
             custom

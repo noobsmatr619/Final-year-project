@@ -1,3 +1,5 @@
+//shcema to create machines in the database 
+
 let mongoose = require("mongoose");
 
 const machineSchema = new mongoose.Schema(

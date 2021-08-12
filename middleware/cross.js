@@ -7,3 +7,5 @@ module.exports = {
         }
     }
 };
+
+// stop users to route to admin route wohout autheticating as admin 

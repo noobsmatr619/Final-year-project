@@ -1,3 +1,4 @@
+// reducer for state management, resseting state for re user, 
 import * as Type from '../actions/types';
 import { useHistory } from 'react-router-dom';
 const initialState = {
@@ -32,6 +33,7 @@ const initialState = {
   locationAccidents: []
 };
 // eslint-disable-next-line import/no-anonymous-default-export
+// actions capitalised, state control the behavioue of the componenetss
 export default (state = initialState, action) => {
   switch (action.type) {
     case Type.GET_ACCIDENT:

@@ -4,6 +4,7 @@ import './auth.css';
 import axios from 'axios';
 import { registerUser, loginUser } from '../../actions/authActions';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { baseUrl } from './../../baseUrl';
 import { Redirect } from 'react-router';
 import { toast } from 'react-toastify';
@@ -38,6 +39,7 @@ class Authentication extends Component {
     var passwordRegex = new RegExp(
       '^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[@$!%*#?&]).{7,}$'
     );
+    // set sate with the user filled in data 
     const { displayName, email, password, confirmPassword } = this.state;
     if (displayName == '') {
       this.setState({
@@ -73,6 +75,7 @@ class Authentication extends Component {
       }
     }
   };
+  // set log in details 
   handleLogin = async (e) => {
     e.preventDefault();
     const { loginEmail, loginPassword } = this.state;
@@ -106,7 +109,7 @@ class Authentication extends Component {
       }
     }
   };
-
+// all the handlers for the forms on log in 
   handleName = (e) => {
     this.setState({
       displayName: e.target.value
@@ -196,7 +199,9 @@ class Authentication extends Component {
                 onClick={this.handleLogin}>
                 Sign In
               </button>
-              <p className="forgot-pass">Forgot Password ?</p>
+              <p className="forgot-pass">
+                <Link to="/forgotpassword">Forgot Password ?</Link>
+              </p>
             </div>
 
             <div className="sub-auth-form-container">

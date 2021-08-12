@@ -5,7 +5,7 @@ var mongoose = require("mongoose");
 var server = require('./server.test');
 var testData = require('./test-data');
 require('dotenv').config();
-
+//intial test data scrapped later
 // Mongo Models/Collections
 const testUser = require("../Models/User");
 const testChat = require("./../Models/Chat"); //gives error

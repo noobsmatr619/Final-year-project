@@ -2,7 +2,7 @@ import React from 'react';
 import AddMachine from './../AddMachine';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-
+//testing machine actions and check if renders and not broken , taken from user test feedbacks 
 describe('AddMachine component test cases', () => {
   test('renders without crashing', () => {
     render(<AddMachine />);

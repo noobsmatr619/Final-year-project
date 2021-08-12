@@ -4,7 +4,7 @@ import { get, post, put, deleteApi } from '../api';
 
 import axios from 'axios';
 import * as Type from './types';
-
+//create team with param name and memeber 
 export const createTeam = (name, member) => async (dispatch) => {
   try {
     let members = [];
@@ -28,7 +28,7 @@ export const createTeam = (name, member) => async (dispatch) => {
     return false;
   }
 };
-
+//get most teams that is available 
 export const getAllTeams = () => async (dispatch) => {
   try {
     const teams = await axios.get(`${baseUrl}/teams/getAllTeams`, {
@@ -48,6 +48,7 @@ export const getAllTeams = () => async (dispatch) => {
     console.log(error);
   }
 };
+// get only signed in user teams
 export const getMyTeams = () => async (dispatch) => {
   try {
     const res = await get('/teams/getMyTeams');

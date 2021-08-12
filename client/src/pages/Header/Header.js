@@ -1,3 +1,4 @@
+// brings all the data to the header on each page can be re rendered on each page 
 import React, { useState, useEffect } from 'react';
 import { SliderData } from './SliderData';
 import MenuIcon from '@material-ui/icons/Menu';

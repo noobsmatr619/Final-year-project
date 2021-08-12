@@ -1,3 +1,4 @@
+// handle product routes 
 const express = require('express');
 const router = express.Router();
 const { uploader } = require('../config/cloudinaryConfiguration');

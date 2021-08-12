@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import ReactTable from 'react-table-6';
 import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+//bottum container wher all the submitted health and safety report can be seel 
 class ButtomContainer extends Component {
   constructor(props) {
     super(props);
@@ -40,14 +42,15 @@ class ButtomContainer extends Component {
             console.log(row);
             return (
               <>
-                <Button
-                  variant="secondary"
-                  type="button"
-                  onClick={async (e) => {
-                    console.log(row?.original._id);
+                <Link
+                  to={{
+                    pathname: `/accident/prone/edit/${row?.original._id}`,
+                    state: {
+                      title: 'Recent Accidents'
+                    }
                   }}>
                   Edit
-                </Button>{' '}
+                </Link>
               </>
             );
           }

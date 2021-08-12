@@ -34,6 +34,7 @@ function reejectButtonRendrer(params) {
 
   return eGui;
 }
+//stock states
 class Stock extends Component {
   constructor(props) {
     super(props);

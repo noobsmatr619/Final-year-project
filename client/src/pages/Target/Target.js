@@ -16,6 +16,7 @@ import {
 } from 'react-bootstrap';
 import './Target.css';
 import MyChart from '../../components/Dashboard/Chart2';
+// sets target of each machiens for target pave 
 class Target extends Component {
   constructor(props) {
     super(props);
