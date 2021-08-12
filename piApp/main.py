@@ -1,7 +1,7 @@
 import pymongo
 import tkinter as tk
 from tkinter import ttk
-
+#mongo connector
 connection_url = "mongodb+srv://admin:Plymouth.0410@dmc.7r25y.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 client = pymongo.MongoClient(connection_url)
